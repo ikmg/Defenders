@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>3840</width>
+    <height>2160</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Защитники Отечества</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_statistic">
+         <attribute name="title">
+          <string>Статистика</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QComboBox" name="comboBox_select_statistic"/>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_statistic_data">
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_save_statistic">
+              <property name="text">
+               <string>Сохранить</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_imports">
+         <attribute name="title">
+          <string>Загрузки</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,8,1">
+            <item>
+             <widget class="QLabel" name="label_import_workbook">
+              <property name="text">
+               <string>Книга</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_import_filename">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_select_import_file">
+              <property name="text">
+               <string>Выбрать</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,9">
+            <item>
+             <widget class="QLabel" name="label_import_subject">
+              <property name="text">
+               <string>Субъект</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_select_import_subject">
+              <property name="maxVisibleItems">
+               <number>30</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,9">
+            <item>
+             <widget class="QLabel" name="label_import_worksheet">
+              <property name="text">
+               <string>Лист</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_import_worksheet"/>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_imports">
+            <item>
+             <widget class="QTableView" name="tableView_imports">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,9">
+            <item>
+             <widget class="QLabel" name="label_contacts">
+              <property name="text">
+               <string>Контакты</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_contacts"/>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="pushButton_load_import">
+            <property name="text">
+             <string>Загрузить</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_exports">
+         <attribute name="title">
+          <string>Выгрузки</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QPushButton" name="pushButton_export_data">
+              <property name="text">
+               <string>Выгрузить сведения в Социальный Фонд России</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_export_allow">
+              <property name="text">
+               <string>Доступно для выгрузки</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_exports">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="2,8,1">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_answer_import">
+                <property name="text">
+                 <string>Протокол загрузки</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_answer_import_filename"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_select_answer_import">
+                <property name="text">
+                 <string>Выбрать</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="2,8,1">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_answer_init">
+                <property name="text">
+                 <string>Протокол идентификации</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_answer_init_filename"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_select_answer_init">
+                <property name="text">
+                 <string>Выбрать</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QPushButton" name="pushButton_load_answers">
+                <property name="text">
+                 <string>Загрузить ответы</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_defenders">
+         <attribute name="title">
+          <string>Защитники Отечества</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_find_defender">
+                <property name="text">
+                 <string>Поиск:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_find_defender"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_defenders">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_svo">
+         <attribute name="title">
+          <string>Участники СВО</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_find_participant">
+                <property name="text">
+                 <string>Поиск:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_find_order_person"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_order_persons">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,8,1">
+              <item>
+               <widget class="QLabel" name="label_order">
+                <property name="text">
+                 <string>Файл</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_order_filename">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_select_order_file">
+                <property name="text">
+                 <string>Выбрать</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_load_orders">
+              <property name="text">
+               <string>Загрузить данные из приказов ОШУ Росгвардии</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_compare">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <attribute name="title">
+          <string>Соотношение</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QSplitter" name="splitter_compare">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <widget class="QWidget" name="horizontalLayoutWidget_3">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QListView" name="listView_handbooks"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="horizontalLayoutWidget_4">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QTableView" name="tableView_handbook_content"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Меню</string>
+    </property>
+    <addaction name="action_information"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Хранилище</string>
+    </property>
+    <addaction name="action_storage_defenders"/>
+    <addaction name="action_storage_exports"/>
+    <addaction name="action_storage_answers"/>
+    <addaction name="action_storage_orders"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <action name="action_load_orders">
+   <property name="text">
+    <string>Загрузить данные из ОШУ Росгвардии</string>
+   </property>
+  </action>
+  <action name="action_information">
+   <property name="text">
+    <string>Информация</string>
+   </property>
+  </action>
+  <action name="action_storage_defenders">
+   <property name="text">
+    <string>Файлы из войск</string>
+   </property>
+  </action>
+  <action name="action_storage_exports">
+   <property name="text">
+    <string>Выгрузки в СФР</string>
+   </property>
+  </action>
+  <action name="action_storage_answers">
+   <property name="text">
+    <string>Ответы СФР</string>
+   </property>
+  </action>
+  <action name="action_storage_orders">
+   <property name="text">
+    <string>Файлы из ОШУ</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
