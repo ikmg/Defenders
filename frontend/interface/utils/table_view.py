@@ -7,8 +7,8 @@ from sqlalchemy.sql.operators import ilike_op
 
 from database import KeepedReport, LinkedOrderPerson, PickedLastName, PickedFirstName, PickedMiddleName, LinkedOrderFIO, LinkedDefender, LinkedPerson, ProvidedReport, \
     EskkMilitarySubject, PickedPersonalNumber
-from data.table_views.imports import ImportsUI
-from tools import datetime_to_string
+from data import ImportsUI
+from tools.date_time import DateTimeConvert
 
 
 class TableView(QAbstractTableModel):
@@ -131,7 +131,7 @@ class ExportTableView(TableView):
             row = [
                 index + 1,
                 model.id,
-                datetime_to_string(model.created_utc),
+                DateTimeConvert(model.created_utc).string,  # должно быть дата/время
                 len(model.provided_report_records),
                 model.answer_import.reg_number if model.answer_import else 'Протокол не поступал',
                 answer
@@ -291,7 +291,7 @@ class StatImportsTableView(TableView):
 
     def __init__(self, session):
         super().__init__(session)
-        self.headers = ['id', 'subject', 'imports', 'persons', 'sended', 'answered']
+        self.headers = ['id', 'subject', 'data', 'persons', 'sended', 'answered']
         self.description = ['ИД', 'Субъект войск', 'Загрузок', 'Защитников', 'Отправлено', 'Ответов']
         self.get_data()
 

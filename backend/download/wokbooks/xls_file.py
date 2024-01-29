@@ -2,25 +2,25 @@ import pyexcel
 import openpyxl
 
 # from tools.filesystem import base_filename, filename_extension, delete_file
-
-
-def convert_to_xlsx(filepath):
-    base = base_filename(filepath)
-    path = filepath.replace(base, '')
-    ext = filename_extension(base)
-    base = base.replace(ext, '')
-    filename_xls = '{}{}.xls'.format(path, base)
-    pyexcel.save_book_as(
-        file_name=filepath,
-        dest_file_name=filename_xls
-    )
-    delete_file(filepath)
-    filename_xlsx = '{}{}.xlsx'.format(path, base)
-    pyexcel.save_book_as(file_name=filename_xls,
-                         dest_file_name=filename_xlsx)
-    delete_file(filepath)
-
-    return filename_xls
+#
+#
+# def convert_to_xlsx(filepath):
+#     base = base_filename(filepath)
+#     path = filepath.replace(base, '')
+#     ext = filename_extension(base)
+#     base = base.replace(ext, '')
+#     filename_xls = '{}{}.xls'.format(path, base)
+#     pyexcel.save_book_as(
+#         file_name=filepath,
+#         dest_file_name=filename_xls
+#     )
+#     delete_file(filepath)
+#     filename_xlsx = '{}{}.xlsx'.format(path, base)
+#     pyexcel.save_book_as(file_name=filename_xls,
+#                          dest_file_name=filename_xlsx)
+#     delete_file(filepath)
+#
+#     return filename_xls
 
 
 def write_xls_list(filename, data_list):

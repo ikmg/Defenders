@@ -13,10 +13,6 @@ def clear_string(value):
     return result
 
 
-def clear_personal_number(value):
-    return value.replace(' ', '')
-
-
 def change_e_symbol(value):
     return value.replace('Ё', 'Е').replace('ё', 'е')
 

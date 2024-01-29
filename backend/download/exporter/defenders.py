@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from database import KeepedReport, KeepedReportRecord
-from tools import datetime_to_string
+from tools.date_time import DateTimeConvert
 
 
 def defenders_load_data(session, import_id):
@@ -17,10 +17,10 @@ def defenders_load_data(session, import_id):
     ]
     report = session.query(KeepedReport).filter(KeepedReport.id == import_id).scalar()
     row = [
-        datetime_to_string(report.created_utc),
+        DateTimeConvert(report.created_utc).string,  # должно быть дата/время
         report.eskk_military_subject.short_name,
         report.id,
-        datetime_to_string(datetime.now()),
+        DateTimeConvert(datetime.now()).string,  # должно быть дата/время
         'Да' if report.is_loaded else 'Нет',
         report.note
     ]
@@ -51,7 +51,7 @@ def defenders_identify_data(session, import_id):
             defender.file_row_num,
             defender.linked_defender.linked_person.person_appeal,
             defender.linked_defender.linked_person.birthday,
-            datetime_to_string(defender.created_utc),
+            DateTimeConvert(defender.created_utc).string,  # должно быть дата/время
             defender.warning_messages,
             defender.critical_messages
         ]
@@ -62,6 +62,5 @@ def defenders_identify_data(session, import_id):
         'Контакты',
         defenders[0].keeped_report.contact_info
     ])
-    q = 1
 
     return data

@@ -128,6 +128,9 @@ class File(Path):
         :param destination: str
         :return: None
         """
+        print('копирование файла <{}> байт:'.format(self.size))
+        print('откуда: <{}>'.format(self.path))
+        print('куда: <{}>\n'.format(destination))
         shutil.copyfile(self.path, destination)
 
     def delete(self):
@@ -157,7 +160,7 @@ class File(Path):
         Определение директории файла
         :return: Directory()
         """
-        return Directory(os.path.dirname(os.path.abspath(self.path)))
+        return Directory(os.path.dirname(self.path))
 
     @property
     def base_name(self):
@@ -178,3 +181,7 @@ class File(Path):
             return parts[1]
         else:
             return ''
+
+    @property
+    def size(self):
+        return os.path.getsize(self.path)

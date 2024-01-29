@@ -1,10 +1,9 @@
-import datetime
-from .fs import Directory, File, work_directory
-
 from database import Connection, DefenderParameter
-from modules.loader.eskk import EskkLoader
-from .ini_files import ini_to_dict
-from .csv_files import csv_to_dict
+from backend import dict_from_ini
+from backend import eskk_genders_upload, eskk_document_types_upload, eskk_military_ranks_upload, eskk_military_subjects_upload
+
+from tools.filesystem import Directory, File, work_directory
+from tools.date_time import DateTimeConvert
 
 
 APP_VERSION = '3.0'
@@ -47,13 +46,6 @@ class DefendersApp(Root):
         self.set_param('version', APP_VERSION)
         self.set_param('release', APP_RELEASE)
 
-    def update_handbooks(self):
-        eskk = EskkLoader(self.database.session)
-        eskk.update_genders(self.storage.eskk.genders_data())
-        eskk.update_document_types(self.storage.eskk.document_types_data())
-        eskk.update_military_ranks(self.storage.eskk.military_ranks_data())
-        eskk.update_military_subjects(self.storage.eskk.military_subjects_data())
-
     def create_param(self, name: str, value: str):
         param = DefenderParameter()
         param.param = name
@@ -77,8 +69,26 @@ class DefendersApp(Root):
             self.create_param(name, '')
             return ''
 
+    def eskk_update_all(self):
+        self.eskk_update_genders()
+        self.eskk_update_document_types()
+        self.eskk_update_military_ranks()
+        self.eskk_update_document_types()
+
+    def eskk_update_genders(self):
+        eskk_genders_upload(self.database.session, self.storage.eskk.genders.path)
+
+    def eskk_update_document_types(self):
+        eskk_document_types_upload(self.database.session, self.storage.eskk.document_types.path)
+
+    def eskk_update_military_ranks(self):
+        eskk_military_ranks_upload(self.database.session, self.storage.eskk.military_ranks.path)
+
+    def eskk_update_military_subjects(self):
+        eskk_military_subjects_upload(self.database.session, self.storage.eskk.military_subjects.path)
+
     def print_log(self, text: str):
-        log_row = [str(datetime.datetime.now()), text]
+        log_row = [DateTimeConvert().string, text]
         self.log.append(log_row)
         if self.settings.debug_mode:
             print(' '.join(log_row))
@@ -102,7 +112,7 @@ class Settings:
         self.read_config()
 
     def read_config(self):
-        config_data = ini_to_dict(self.file.path)
+        config_data = dict_from_ini(self.file.path)
         self.echo_mode = True if config_data['DATABASE']['echo'] == 'True' else False
         self.debug_mode = True if config_data['APPLICATION']['debug_mode'] == 'True' else False
         self.db_dialect = config_data['DATABASE']['dialect']
@@ -114,6 +124,7 @@ class Database:
         self.file = File(db_file_path)
         self.uri = '{}:///{}'.format(dialect, self.file.path)
         self.connection = Connection(self.uri, echo_mode)
+        self.connection.create_db()
 
     def __repr__(self):
         return self.file.path
@@ -129,7 +140,7 @@ class Storage(Root):
         super().__init__(root)
         self.answers = self.root.add_dir('answers')
         self.imports = self.root.add_dir('defenders')
-        self.eskk = self.root.add_dir('eskk')
+        self.eskk = Eskk(self.root.add_dir('eskk'))
         self.exports = self.root.add_dir('exports')
         self.images = Images(self.root.add_dir('images'))
         self.orders = self.root.add_dir('orders')
@@ -139,22 +150,10 @@ class Eskk(Root):
 
     def __init__(self, root: Directory):
         super().__init__(root)
-        self.genders = File(self.root.add_file('genders.csv'))
-        self.document_types = File(self.root.add_file('document_types.csv'))
-        self.military_ranks = File(self.root.add_file('military_ranks.csv'))
-        self.military_subjects = File(self.root.add_file('military_subjects.csv'))
-
-    def genders_data(self):
-        return csv_to_dict(self.genders) if self.genders.is_exists else []
-
-    def document_types_data(self):
-        return csv_to_dict(self.document_types) if self.document_types.is_exists else []
-
-    def military_ranks_data(self):
-        return csv_to_dict(self.military_ranks) if self.military_ranks.is_exists else []
-
-    def military_subjects_data(self):
-        return csv_to_dict(self.military_subjects) if self.military_subjects.is_exists else []
+        self.genders = self.root.add_file('genders.csv')
+        self.document_types = self.root.add_file('document_types.csv')
+        self.military_ranks = self.root.add_file('military_ranks.csv')
+        self.military_subjects = self.root.add_file('military_subjects.csv')
 
 
 class Images(Root):
