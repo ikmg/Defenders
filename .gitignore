@@ -3,6 +3,7 @@ __pycache__/
 storage/
 _done_old/
 modules/
+test*.py
 
 *.py[cod]
 *$py.class

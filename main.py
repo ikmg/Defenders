@@ -6,14 +6,17 @@ from PyQt5.QtCore import QLockFile, Qt
 from PyQt5.QtWidgets import QApplication, QMessageBox, QMainWindow, QFileDialog, QHeaderView, QAction, QSplashScreen
 
 from database import KeepedReport, KeepedReportRecord
-from data import ImportUI
+from backend.interface import ImportUI
 from frontend.interface.main_window import Ui_MainWindow
 from frontend.interface.utils.combo_box import subjects_combo_box_items
 from frontend.interface.utils.table_view import ImportsTableView, ParticipantsTableView, DefendersTableView, ExportTableView, StatImportsTableView
-from modules.receiver import KeepedReportHandler, KeepedOrderHandler, ProvidedReportHandler, AnswerChecker
+from backend.upload.handler import KeepedReportHandler, KeepedOrderHandler
+from backend.upload.handler.provider import ProvidedReportHandler
+from backend.upload.handler.answer import AnswerChecker
 from backend.download.exporter import sfr_export_data
-from tools import DefendersApp, write_csv_list, File
-
+from backend import DefendersApp
+from backend.download.csv import write_csv_list
+from tools import File
 from backend.download.wokbooks.xls_file import report_result
 
 
