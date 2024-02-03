@@ -1,9 +1,9 @@
 # ---------------------------------
-# Получение данных из рабочих книг
-# допустимые форматы ODS, XLS, XLSX
+# Получение данных из файлов
+# допустимые форматы CSV, ODS, XLS, XLSX
 # ---------------------------------
 
-from .csv import dict_from_csv
+from .eskk import dict_from_csv
 from .imports import ImportWorkbook
 from .orders import OrderWorkbook
-from .answers import AnswerWorkbook
+from .answer import AnswerImportWorkbook, AnswerInitWorkbook

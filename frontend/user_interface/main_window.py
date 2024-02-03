@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowBqRHzs.ui'
+## Form generated from reading UI file 'main_windowJMsKoJ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -21,18 +21,34 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(1024, 768))
         MainWindow.setMaximumSize(QSize(3840, 2160))
         MainWindow.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        MainWindow.setTabShape(QTabWidget.Rounded)
+        MainWindow.setDockOptions(QMainWindow.AllowTabbedDocks|QMainWindow.AnimatedDocks)
         self.action_load_orders = QAction(MainWindow)
         self.action_load_orders.setObjectName(u"action_load_orders")
         self.action_information = QAction(MainWindow)
         self.action_information.setObjectName(u"action_information")
-        self.action_storage_defenders = QAction(MainWindow)
-        self.action_storage_defenders.setObjectName(u"action_storage_defenders")
+        self.action_storage_imports = QAction(MainWindow)
+        self.action_storage_imports.setObjectName(u"action_storage_imports")
         self.action_storage_exports = QAction(MainWindow)
         self.action_storage_exports.setObjectName(u"action_storage_exports")
         self.action_storage_answers = QAction(MainWindow)
         self.action_storage_answers.setObjectName(u"action_storage_answers")
         self.action_storage_orders = QAction(MainWindow)
         self.action_storage_orders.setObjectName(u"action_storage_orders")
+        self.action_clear_storage = QAction(MainWindow)
+        self.action_clear_storage.setObjectName(u"action_clear_storage")
+        self.action_exit = QAction(MainWindow)
+        self.action_exit.setObjectName(u"action_exit")
+        self.action_eskk_genders = QAction(MainWindow)
+        self.action_eskk_genders.setObjectName(u"action_eskk_genders")
+        self.action_eskk_doc_types = QAction(MainWindow)
+        self.action_eskk_doc_types.setObjectName(u"action_eskk_doc_types")
+        self.action_eskk_ranks = QAction(MainWindow)
+        self.action_eskk_ranks.setObjectName(u"action_eskk_ranks")
+        self.action_eskk_subjects = QAction(MainWindow)
+        self.action_eskk_subjects.setObjectName(u"action_eskk_subjects")
+        self.action_eskk_all = QAction(MainWindow)
+        self.action_eskk_all.setObjectName(u"action_eskk_all")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -55,6 +71,7 @@ class Ui_MainWindow(object):
 
         self.tableView_statistic_data = QTableView(self.tab_statistic)
         self.tableView_statistic_data.setObjectName(u"tableView_statistic_data")
+        self.tableView_statistic_data.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableView_statistic_data.setSortingEnabled(True)
         self.tableView_statistic_data.horizontalHeader().setProperty("showSortIndicator", True)
         self.tableView_statistic_data.horizontalHeader().setStretchLastSection(True)
@@ -108,6 +125,7 @@ class Ui_MainWindow(object):
         self.comboBox_select_import_subject = QComboBox(self.tab_imports)
         self.comboBox_select_import_subject.setObjectName(u"comboBox_select_import_subject")
         self.comboBox_select_import_subject.setMaxVisibleItems(30)
+        self.comboBox_select_import_subject.setInsertPolicy(QComboBox.NoInsert)
 
         self.horizontalLayout_7.addWidget(self.comboBox_select_import_subject)
 
@@ -180,11 +198,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.pushButton_export_data)
 
-        self.label_export_allow = QLabel(self.tab_exports)
-        self.label_export_allow.setObjectName(u"label_export_allow")
-
-        self.verticalLayout_6.addWidget(self.label_export_allow)
-
         self.tableView_exports = QTableView(self.tab_exports)
         self.tableView_exports.setObjectName(u"tableView_exports")
         self.tableView_exports.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -193,6 +206,30 @@ class Ui_MainWindow(object):
         self.tableView_exports.horizontalHeader().setStretchLastSection(True)
 
         self.verticalLayout_6.addWidget(self.tableView_exports)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.label_export_id = QLabel(self.tab_exports)
+        self.label_export_id.setObjectName(u"label_export_id")
+
+        self.horizontalLayout.addWidget(self.label_export_id)
+
+        self.lineEdit_export_id = QLineEdit(self.tab_exports)
+        self.lineEdit_export_id.setObjectName(u"lineEdit_export_id")
+        self.lineEdit_export_id.setEnabled(False)
+
+        self.horizontalLayout.addWidget(self.lineEdit_export_id)
+
+        self.pushButton_answer_cancel = QPushButton(self.tab_exports)
+        self.pushButton_answer_cancel.setObjectName(u"pushButton_answer_cancel")
+
+        self.horizontalLayout.addWidget(self.pushButton_answer_cancel)
+
+        self.horizontalLayout.setStretch(0, 2)
+        self.horizontalLayout.setStretch(1, 8)
+        self.horizontalLayout.setStretch(2, 1)
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout)
 
         self.horizontalLayout_14 = QHBoxLayout()
         self.horizontalLayout_14.setSpacing(6)
@@ -204,6 +241,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_answer_import_filename = QLineEdit(self.tab_exports)
         self.lineEdit_answer_import_filename.setObjectName(u"lineEdit_answer_import_filename")
+        self.lineEdit_answer_import_filename.setEnabled(False)
 
         self.horizontalLayout_14.addWidget(self.lineEdit_answer_import_filename)
 
@@ -228,6 +266,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_answer_init_filename = QLineEdit(self.tab_exports)
         self.lineEdit_answer_init_filename.setObjectName(u"lineEdit_answer_init_filename")
+        self.lineEdit_answer_init_filename.setEnabled(False)
 
         self.horizontalLayout_12.addWidget(self.lineEdit_answer_init_filename)
 
@@ -352,40 +391,6 @@ class Ui_MainWindow(object):
         self.gridLayout_5.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_svo, "")
-        self.tab_compare = QWidget()
-        self.tab_compare.setObjectName(u"tab_compare")
-        self.tab_compare.setEnabled(False)
-        self.gridLayout_6 = QGridLayout(self.tab_compare)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.splitter_compare = QSplitter(self.tab_compare)
-        self.splitter_compare.setObjectName(u"splitter_compare")
-        self.splitter_compare.setOrientation(Qt.Horizontal)
-        self.horizontalLayoutWidget_3 = QWidget(self.splitter_compare)
-        self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget_3)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.listView_handbooks = QListView(self.horizontalLayoutWidget_3)
-        self.listView_handbooks.setObjectName(u"listView_handbooks")
-
-        self.horizontalLayout.addWidget(self.listView_handbooks)
-
-        self.splitter_compare.addWidget(self.horizontalLayoutWidget_3)
-        self.horizontalLayoutWidget_4 = QWidget(self.splitter_compare)
-        self.horizontalLayoutWidget_4.setObjectName(u"horizontalLayoutWidget_4")
-        self.horizontalLayout_6 = QHBoxLayout(self.horizontalLayoutWidget_4)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.tableView_handbook_content = QTableView(self.horizontalLayoutWidget_4)
-        self.tableView_handbook_content.setObjectName(u"tableView_handbook_content")
-
-        self.horizontalLayout_6.addWidget(self.tableView_handbook_content)
-
-        self.splitter_compare.addWidget(self.horizontalLayoutWidget_4)
-
-        self.gridLayout_6.addWidget(self.splitter_compare, 0, 0, 1, 1)
-
-        self.tabWidget.addTab(self.tab_compare, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -396,23 +401,36 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 1024, 22))
-        self.menu = QMenu(self.menubar)
-        self.menu.setObjectName(u"menu")
-        self.menu_2 = QMenu(self.menubar)
-        self.menu_2.setObjectName(u"menu_2")
+        self.menu_main = QMenu(self.menubar)
+        self.menu_main.setObjectName(u"menu_main")
+        self.menu_storage = QMenu(self.menubar)
+        self.menu_storage.setObjectName(u"menu_storage")
+        self.menu_catologs = QMenu(self.menu_storage)
+        self.menu_catologs.setObjectName(u"menu_catologs")
+        self.menu_eskk = QMenu(self.menu_storage)
+        self.menu_eskk.setObjectName(u"menu_eskk")
         MainWindow.setMenuBar(self.menubar)
 
-        self.menubar.addAction(self.menu.menuAction())
-        self.menubar.addAction(self.menu_2.menuAction())
-        self.menu.addAction(self.action_information)
-        self.menu_2.addAction(self.action_storage_defenders)
-        self.menu_2.addAction(self.action_storage_exports)
-        self.menu_2.addAction(self.action_storage_answers)
-        self.menu_2.addAction(self.action_storage_orders)
+        self.menubar.addAction(self.menu_main.menuAction())
+        self.menubar.addAction(self.menu_storage.menuAction())
+        self.menu_main.addAction(self.action_exit)
+        self.menu_storage.addAction(self.menu_catologs.menuAction())
+        self.menu_storage.addAction(self.menu_eskk.menuAction())
+        self.menu_storage.addAction(self.action_clear_storage)
+        self.menu_catologs.addAction(self.action_storage_imports)
+        self.menu_catologs.addAction(self.action_storage_exports)
+        self.menu_catologs.addAction(self.action_storage_answers)
+        self.menu_catologs.addAction(self.action_storage_orders)
+        self.menu_eskk.addAction(self.action_eskk_genders)
+        self.menu_eskk.addAction(self.action_eskk_doc_types)
+        self.menu_eskk.addAction(self.action_eskk_ranks)
+        self.menu_eskk.addAction(self.action_eskk_subjects)
+        self.menu_eskk.addSeparator()
+        self.menu_eskk.addAction(self.action_eskk_all)
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -422,10 +440,17 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0449\u0438\u0442\u043d\u0438\u043a\u0438 \u041e\u0442\u0435\u0447\u0435\u0441\u0442\u0432\u0430", None))
         self.action_load_orders.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0438\u0437 \u041e\u0428\u0423 \u0420\u043e\u0441\u0433\u0432\u0430\u0440\u0434\u0438\u0438", None))
         self.action_information.setText(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
-        self.action_storage_defenders.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b\u044b \u0438\u0437 \u0432\u043e\u0439\u0441\u043a", None))
-        self.action_storage_exports.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0433\u0440\u0443\u0437\u043a\u0438 \u0432 \u0421\u0424\u0420", None))
-        self.action_storage_answers.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u0432\u0435\u0442\u044b \u0421\u0424\u0420", None))
-        self.action_storage_orders.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b\u044b \u0438\u0437 \u041e\u0428\u0423", None))
+        self.action_storage_imports.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438", None))
+        self.action_storage_exports.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0433\u0440\u0443\u0437\u043a\u0438", None))
+        self.action_storage_answers.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u0432\u0435\u0442\u044b", None))
+        self.action_storage_orders.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0440\u0438\u043a\u0430\u0437\u044b", None))
+        self.action_clear_storage.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0447\u0438\u0441\u0442\u0438\u0442\u044c \u0445\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
+        self.action_exit.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
+        self.action_eskk_genders.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b", None))
+        self.action_eskk_doc_types.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0438\u043f\u044b \u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u043e\u0432", None))
+        self.action_eskk_ranks.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0432\u0430\u043d\u0438\u044f", None))
+        self.action_eskk_subjects.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0443\u0431\u044a\u0435\u043a\u0442\u044b", None))
+        self.action_eskk_all.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0435", None))
         self.pushButton_save_statistic.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_statistic), QCoreApplication.translate("MainWindow", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
         self.label_import_workbook.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043d\u0438\u0433\u0430", None))
@@ -433,25 +458,27 @@ class Ui_MainWindow(object):
         self.label_import_subject.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0443\u0431\u044a\u0435\u043a\u0442", None))
         self.label_import_worksheet.setText(QCoreApplication.translate("MainWindow", u"\u041b\u0438\u0441\u0442", None))
         self.label_contacts.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b", None))
-        self.pushButton_load_import.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c", None))
+        self.pushButton_load_import.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0444\u0430\u0439\u043b", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_imports), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438", None))
         self.pushButton_export_data.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0441\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u0432 \u0421\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0424\u043e\u043d\u0434 \u0420\u043e\u0441\u0441\u0438\u0438", None))
-        self.label_export_allow.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u0434\u043b\u044f \u0432\u044b\u0433\u0440\u0443\u0437\u043a\u0438", None))
+        self.label_export_id.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u0432\u0435\u0442 \u0434\u043b\u044f \u0432\u044b\u0433\u0440\u0443\u0437\u043a\u0438", None))
+        self.pushButton_answer_cancel.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c", None))
         self.label_answer_import.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438", None))
         self.pushButton_select_answer_import.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c", None))
         self.label_answer_init.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u0438\u0434\u0435\u043d\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u0438", None))
         self.pushButton_select_answer_init.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c", None))
-        self.pushButton_load_answers.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043e\u0442\u0432\u0435\u0442\u044b", None))
+        self.pushButton_load_answers.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043f\u0440\u043e\u0442\u043e\u043a\u043e\u043b\u044b", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_exports), QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0433\u0440\u0443\u0437\u043a\u0438", None))
         self.label_find_defender.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a:", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_defenders), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0449\u0438\u0442\u043d\u0438\u043a\u0438 \u041e\u0442\u0435\u0447\u0435\u0441\u0442\u0432\u0430", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_defenders), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0449\u0438\u0442\u043d\u0438\u043a\u0438", None))
         self.label_find_participant.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a:", None))
         self.label_order.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
         self.pushButton_select_order_file.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c", None))
-        self.pushButton_load_orders.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0438\u0437 \u043f\u0440\u0438\u043a\u0430\u0437\u043e\u0432 \u041e\u0428\u0423 \u0420\u043e\u0441\u0433\u0432\u0430\u0440\u0434\u0438\u0438", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_svo), QCoreApplication.translate("MainWindow", u"\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0438 \u0421\u0412\u041e", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_compare), QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0442\u043d\u043e\u0448\u0435\u043d\u0438\u0435", None))
-        self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u043d\u044e", None))
-        self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
+        self.pushButton_load_orders.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u043e\u0431 \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0430\u0445", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_svo), QCoreApplication.translate("MainWindow", u"\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0438", None))
+        self.menu_main.setTitle(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u043d\u044e", None))
+        self.menu_storage.setTitle(QCoreApplication.translate("MainWindow", u"\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
+        self.menu_catologs.setTitle(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0442\u0430\u043b\u043e\u0433...", None))
+        self.menu_eskk.setTitle(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a\u0438...", None))
     # retranslateUi
 

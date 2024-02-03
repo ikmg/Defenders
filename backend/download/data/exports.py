@@ -1,16 +1,16 @@
 from database import ProvidedReport, ProvidedReportRecord
 
 
-def sfr_export_data(session, sfr_export_id):
+def export_data(session, export_id):
     """Формирует данные для CSV файла по id экспорта в СФР"""
     # запрос и сортировка сведений по номерам строк
     provided_report = session.query(ProvidedReport)
-    provided_report = provided_report.filter(ProvidedReport.id == sfr_export_id)
+    provided_report = provided_report.filter(ProvidedReport.id == export_id)
     provided_report = provided_report.join(ProvidedReportRecord)
     provided_report = provided_report.order_by(ProvidedReportRecord.row_number)
     provided_report = provided_report.scalar()
     # обработка результатов запроса
-    export_csv = []
+    data = []
     if provided_report:
         for record in provided_report.provided_report_records:
             defender = record.keeped_report_record.linked_defender
@@ -49,5 +49,5 @@ def sfr_export_data(session, sfr_export_id):
                 defender.linked_fact_address.picked_flat.value,
                 defender.id_ern
             ]
-            export_csv.append(row)
-    return export_csv
+            data.append(row)
+    return data

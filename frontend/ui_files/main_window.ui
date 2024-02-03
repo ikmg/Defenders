@@ -28,6 +28,12 @@
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -38,7 +44,7 @@
          <bool>true</bool>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="tab_statistic">
          <attribute name="title">
@@ -52,6 +58,9 @@
             </item>
             <item>
              <widget class="QTableView" name="tableView_statistic_data">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
               <property name="sortingEnabled">
                <bool>true</bool>
               </property>
@@ -118,6 +127,9 @@
               <property name="maxVisibleItems">
                <number>30</number>
               </property>
+              <property name="insertPolicy">
+               <enum>QComboBox::NoInsert</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -170,7 +182,7 @@
           <item row="4" column="0">
            <widget class="QPushButton" name="pushButton_load_import">
             <property name="text">
-             <string>Загрузить</string>
+             <string>Загрузить файл</string>
             </property>
            </widget>
           </item>
@@ -191,13 +203,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_export_allow">
-              <property name="text">
-               <string>Доступно для выгрузки</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QTableView" name="tableView_exports">
               <property name="selectionBehavior">
                <enum>QAbstractItemView::SelectRows</enum>
@@ -214,6 +219,31 @@
              </widget>
             </item>
             <item>
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,8,1">
+              <item>
+               <widget class="QLabel" name="label_export_id">
+                <property name="text">
+                 <string>Ответ для выгрузки</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_export_id">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_answer_cancel">
+                <property name="text">
+                 <string>Отменить</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
              <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="2,8,1">
               <property name="spacing">
                <number>6</number>
@@ -226,7 +256,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_answer_import_filename"/>
+               <widget class="QLineEdit" name="lineEdit_answer_import_filename">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_select_answer_import">
@@ -250,7 +284,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_answer_init_filename"/>
+               <widget class="QLineEdit" name="lineEdit_answer_init_filename">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_select_answer_init">
@@ -266,7 +304,7 @@
               <item>
                <widget class="QPushButton" name="pushButton_load_answers">
                 <property name="text">
-                 <string>Загрузить ответы</string>
+                 <string>Загрузить протоколы</string>
                 </property>
                </widget>
               </item>
@@ -278,7 +316,7 @@
         </widget>
         <widget class="QWidget" name="tab_defenders">
          <attribute name="title">
-          <string>Защитники Отечества</string>
+          <string>Защитники</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
@@ -319,7 +357,7 @@
         </widget>
         <widget class="QWidget" name="tab_svo">
          <attribute name="title">
-          <string>Участники СВО</string>
+          <string>Участники</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
@@ -379,42 +417,11 @@
             <item>
              <widget class="QPushButton" name="pushButton_load_orders">
               <property name="text">
-               <string>Загрузить данные из приказов ОШУ Росгвардии</string>
+               <string>Загрузить данные об участниках</string>
               </property>
              </widget>
             </item>
            </layout>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="tab_compare">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <attribute name="title">
-          <string>Соотношение</string>
-         </attribute>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
-           <widget class="QSplitter" name="splitter_compare">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <widget class="QWidget" name="horizontalLayoutWidget_3">
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QListView" name="listView_handbooks"/>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="horizontalLayoutWidget_4">
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QTableView" name="tableView_handbook_content"/>
-              </item>
-             </layout>
-            </widget>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -433,23 +440,42 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menu_main">
     <property name="title">
      <string>Меню</string>
     </property>
-    <addaction name="action_information"/>
+    <addaction name="action_exit"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menu_storage">
     <property name="title">
      <string>Хранилище</string>
     </property>
-    <addaction name="action_storage_defenders"/>
-    <addaction name="action_storage_exports"/>
-    <addaction name="action_storage_answers"/>
-    <addaction name="action_storage_orders"/>
+    <widget class="QMenu" name="menu_catologs">
+     <property name="title">
+      <string>Открыть каталог...</string>
+     </property>
+     <addaction name="action_storage_imports"/>
+     <addaction name="action_storage_exports"/>
+     <addaction name="action_storage_answers"/>
+     <addaction name="action_storage_orders"/>
+    </widget>
+    <widget class="QMenu" name="menu_eskk">
+     <property name="title">
+      <string>Обновить справочники...</string>
+     </property>
+     <addaction name="action_eskk_genders"/>
+     <addaction name="action_eskk_doc_types"/>
+     <addaction name="action_eskk_ranks"/>
+     <addaction name="action_eskk_subjects"/>
+     <addaction name="separator"/>
+     <addaction name="action_eskk_all"/>
+    </widget>
+    <addaction name="menu_catologs"/>
+    <addaction name="menu_eskk"/>
+    <addaction name="action_clear_storage"/>
    </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_2"/>
+   <addaction name="menu_main"/>
+   <addaction name="menu_storage"/>
   </widget>
   <action name="action_load_orders">
    <property name="text">
@@ -461,24 +487,59 @@
     <string>Информация</string>
    </property>
   </action>
-  <action name="action_storage_defenders">
+  <action name="action_storage_imports">
    <property name="text">
-    <string>Файлы из войск</string>
+    <string>Загрузки</string>
    </property>
   </action>
   <action name="action_storage_exports">
    <property name="text">
-    <string>Выгрузки в СФР</string>
+    <string>Выгрузки</string>
    </property>
   </action>
   <action name="action_storage_answers">
    <property name="text">
-    <string>Ответы СФР</string>
+    <string>Ответы</string>
    </property>
   </action>
   <action name="action_storage_orders">
    <property name="text">
-    <string>Файлы из ОШУ</string>
+    <string>Приказы</string>
+   </property>
+  </action>
+  <action name="action_clear_storage">
+   <property name="text">
+    <string>Зачистить хранилище</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="action_eskk_genders">
+   <property name="text">
+    <string>Пол</string>
+   </property>
+  </action>
+  <action name="action_eskk_doc_types">
+   <property name="text">
+    <string>Типы документов</string>
+   </property>
+  </action>
+  <action name="action_eskk_ranks">
+   <property name="text">
+    <string>Звания</string>
+   </property>
+  </action>
+  <action name="action_eskk_subjects">
+   <property name="text">
+    <string>Субъекты</string>
+   </property>
+  </action>
+  <action name="action_eskk_all">
+   <property name="text">
+    <string>Все</string>
    </property>
   </action>
  </widget>

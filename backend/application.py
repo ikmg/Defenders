@@ -5,9 +5,13 @@ from backend import eskk_genders_upload, eskk_document_types_upload, eskk_milita
 from tools.filesystem import Directory, File, work_directory
 from tools.date_time import DateTimeConvert
 
-
-APP_VERSION = '3.0'
-APP_RELEASE = '26.01.2024'
+# НАЗВАНИЯ ВЕРСИЙ - НАЗВАНИЯ ОРУДИЙ - ПО АЛФАВИТУ
+# А - АЛЕБАРДА
+# Б - БЕРДАНКА
+# В - ВИНТОВКА
+# Г - ГАРДА
+APP_VERSION = 'АЛЕБАРДА'
+APP_RELEASE = '04.02.2024'
 
 
 class Root:
@@ -40,7 +44,7 @@ class DefendersApp(Root):
         self.storage = Storage(self.root.add_dir('storage'))
         self.database = Database(
             self.settings.db_dialect,
-            self.storage.root.add_file('defenders.db').path,
+            self.storage.root.add_file('defenders.db'),
             self.settings.echo_mode
         )
         self.set_param('version', APP_VERSION)
@@ -76,16 +80,16 @@ class DefendersApp(Root):
         self.eskk_update_document_types()
 
     def eskk_update_genders(self):
-        eskk_genders_upload(self.database.session, self.storage.eskk.genders.path)
+        eskk_genders_upload(self.database.session, self.storage.eskk.genders)
 
     def eskk_update_document_types(self):
-        eskk_document_types_upload(self.database.session, self.storage.eskk.document_types.path)
+        eskk_document_types_upload(self.database.session, self.storage.eskk.document_types)
 
     def eskk_update_military_ranks(self):
-        eskk_military_ranks_upload(self.database.session, self.storage.eskk.military_ranks.path)
+        eskk_military_ranks_upload(self.database.session, self.storage.eskk.military_ranks)
 
     def eskk_update_military_subjects(self):
-        eskk_military_subjects_upload(self.database.session, self.storage.eskk.military_subjects.path)
+        eskk_military_subjects_upload(self.database.session, self.storage.eskk.military_subjects)
 
     def print_log(self, text: str):
         log_row = [DateTimeConvert().string, text]
@@ -95,10 +99,11 @@ class DefendersApp(Root):
 
     @property
     def version(self):
-        return 'v.{} от {}'.format(
-            self.get_param('version'),
-            self.get_param('release')
-        )
+        # return 'v. {} от {}'.format(
+        #     self.get_param('version'),
+        #     self.get_param('release')
+        # )
+        return self.get_param('version')
 
 
 class Settings:
@@ -120,8 +125,8 @@ class Settings:
 
 class Database:
 
-    def __init__(self, dialect: str, db_file_path: str, echo_mode: bool):
-        self.file = File(db_file_path)
+    def __init__(self, dialect: str, db_file: File, echo_mode: bool):
+        self.file = db_file
         self.uri = '{}:///{}'.format(dialect, self.file.path)
         self.connection = Connection(self.uri, echo_mode)
         self.connection.create_db()
@@ -160,14 +165,27 @@ class Images(Root):
 
     def __init__(self, root: Directory):
         super().__init__(root)
-        self.icon = self.root.add_file('icon.ico')
+        self.clear = self.root.add_file('clear.png')
+        self.defenders = self.root.add_file('defenders.png')
         self.delete = self.root.add_file('delete.png')
+        self.exports = self.root.add_file('exports.png')
+        self.find = self.root.add_file('find.png')
         self.finish = self.root.add_file('finish.png')
+        self.folder_open = self.root.add_file('folder_open.png')
+        self.folder = self.root.add_file('folder.png')
+        self.icon = self.root.add_file('icon.ico')
         self.import_p = self.root.add_file('import_p.png')
+        self.imports = self.root.add_file('imports.png')
+        self.info = self.root.add_file('info.png')
         self.init_p = self.root.add_file('init_p.png')
+        self.load = self.root.add_file('load.png')
+        self.menu = self.root.add_file('menu.png')
         self.open = self.root.add_file('open.png')
+        self.orders = self.root.add_file('orders.png')
+        self.properties = self.root.add_file('properties.png')
         self.refresh = self.root.add_file('refresh.png')
         self.result = self.root.add_file('result.png')
+        self.search = self.root.add_file('search.png')
+        self.tools = self.root.add_file('tools.png')
+        self.stat = self.root.add_file('stat.png')
         self.undo = self.root.add_file('undo.png')
-        self.folder = self.root.add_file('folder.png')
-        self.rosgvard = self.root.add_file('rg.png')

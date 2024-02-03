@@ -3,3 +3,4 @@
 
 from .eskk import EskkGenderHandler, EskkDocumentTypeHandler, EskkMilitaryRankHandler, EskkMilitarySubjectHandler
 from .keeper import KeepedReportHandler, KeepedOrderHandler
+from .answer import AnswerHandler

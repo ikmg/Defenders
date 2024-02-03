@@ -104,6 +104,22 @@ class Directory(Path):
         if not self.is_exists:
             os.mkdir(self.path)
 
+    def open(self):
+        """
+        Открыть директорию в операционной системе
+        :return: None
+        """
+        if self.is_exists:
+            print('открытие директории <{}>'.format(self.rel_path))
+            if platform.system() == 'Darwin':  # macOS
+                subprocess.call(('open', self.path))
+            elif platform.system() == 'Windows':  # Windows
+                subprocess.call(('start', "", self.path), shell=True)
+            else:  # linux variants
+                subprocess.run(['xdg-open', self.path])
+        else:
+            raise FileNotFoundError('директория не найдена {}'.format(self.path))
+
 
 class File(Path):
     """
@@ -115,12 +131,16 @@ class File(Path):
         Запуск файла в операционной системе
         :return: None
         """
-        if platform.system() == 'Darwin':  # macOS
-            subprocess.call(('open', self.path))
-        elif platform.system() == 'Windows':  # Windows
-            subprocess.call(('start', "", self.path), shell=True)
-        else:  # linux variants
-            subprocess.run(['xdg-open', self.path])
+        if self.is_exists:
+            print('открытие файла <{}>'.format(self.rel_path))
+            if platform.system() == 'Darwin':  # macOS
+                subprocess.call(('open', self.path))
+            elif platform.system() == 'Windows':  # Windows
+                subprocess.call(('start', "", self.path), shell=True)
+            else:  # linux variants
+                subprocess.run(['xdg-open', self.path])
+        else:
+            raise FileNotFoundError('файл не найден {}'.format(self.path))
 
     def copy(self, destination: str):
         """
@@ -128,10 +148,13 @@ class File(Path):
         :param destination: str
         :return: None
         """
-        print('копирование файла <{}> байт:'.format(self.size))
-        print('откуда: <{}>'.format(self.path))
-        print('куда: <{}>\n'.format(destination))
-        shutil.copyfile(self.path, destination)
+        if self.is_exists:
+            print('копирование файла <{}> байт:'.format(self.size))
+            print('откуда: <{}>'.format(self.path))
+            print('куда: <{}>\n'.format(destination))
+            shutil.copyfile(self.path, destination)
+        else:
+            raise FileNotFoundError('файл не найден {}'.format(self.path))
 
     def delete(self):
         """

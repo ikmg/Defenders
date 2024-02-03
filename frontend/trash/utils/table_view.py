@@ -7,7 +7,7 @@ from sqlalchemy.sql.operators import ilike_op
 
 from database import KeepedReport, LinkedOrderPerson, PickedLastName, PickedFirstName, PickedMiddleName, LinkedOrderFIO, LinkedDefender, LinkedPerson, ProvidedReport, \
     EskkMilitarySubject, PickedPersonalNumber
-from backend.interface import ImportsUI
+from frontend.trash.table_views.data.tv_import import ImportsUI
 from tools.date_time import DateTimeConvert
 
 

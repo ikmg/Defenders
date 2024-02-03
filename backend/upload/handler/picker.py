@@ -317,6 +317,7 @@ class PickedPersonalNumberHandler(PickerHandler):
     def __init__(self, session, value):
         super().__init__(session, PickedPersonalNumber, value)
         self.value = self.value.replace(' ', '')  # дополнительная очистка
+        self.value = self.value.upper()  # намеренное приведение к верхнему регистру
         # данные для анализа
         self.is_required = True
         self.reg_exp = '[А-Я]{1,2}\-\d{6}'

@@ -1,5 +1,5 @@
-from .data import ImportWorkbook, OrderWorkbook, AnswerWorkbook
-from .handler import KeepedReportHandler, KeepedOrderHandler
+from .data import ImportWorkbook, OrderWorkbook, AnswerImportWorkbook, AnswerInitWorkbook
+from .handler import KeepedReportHandler, KeepedOrderHandler, AnswerHandler
 
 from tools import DateTimeConvert
 
@@ -39,7 +39,7 @@ class ImportUploader:
             'rows_data': self.workbook.worksheet_data()
         }
         KeepedReportHandler(self.session, **keywords)
-        # self.session.commit()
+        self.session.commit()
 
     @property
     def storage_filename(self):
@@ -66,7 +66,6 @@ class OrdersUploader:
             'workbook': self.workbook
         }
         KeepedOrderHandler(self.session, **keywords)
-        # self.session.commit()
 
     @property
     def storage_filename(self):
@@ -75,7 +74,17 @@ class OrdersUploader:
 
 class AnswerUploader:
 
-    def __init__(self, session, file_path):
+    def __init__(self, session, export_id, import_file_path, init_file_path):
         self.session = session
-        self.workbook = OrderWorkbook(file_path)
-        self.original_file = None
+
+        self.workbook_import = AnswerImportWorkbook(import_file_path)
+        self.workbook_import.load()
+        self.workbook_import.select_worksheet(self.workbook_import.worksheets_list[0])
+
+        self.workbook_init = AnswerInitWorkbook(init_file_path)
+        self.workbook_init.load()
+        self.workbook_init.select_worksheet(self.workbook_init.worksheets_list[0])
+
+        answer = AnswerHandler(self.session, export_id, self.workbook_import.worksheet_data(), self.workbook_init.worksheet_data())
+        answer.check()
+        answer.save()
