@@ -8,6 +8,11 @@ from PyQt5.QtWidgets import QMainWindow, QSplashScreen, QApplication, QMessageBo
 from backend import DefendersApp
 from frontend import Ui_MainWindow, ImportsTableViewer, Importer, ExportsTableViewer, Exporter, Responder, Menu, DefendersTableViewer, ParticipantsTableViewer, Loader
 
+import pyexcel
+import pyexcel_io
+import pyexcel_ods
+import pyexcel_xls
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
