@@ -51,5 +51,6 @@ class Loader:
             self.main.app.database.session.commit()
             self.main.lineEdit_order_filename.clear()
             self.enable_orders_fields()
+            QMessageBox.information(self.main, 'Загрузка приказов', 'Успешно завершено')
         except Exception as e:
             QMessageBox.critical(self.main, 'Загрузка приказов', 'Ошибка: {}'.format(e))

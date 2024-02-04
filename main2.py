@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QMainWindow, QSplashScreen, QApplication, QMessageBox
 
 from backend import DefendersApp
-from frontend import Ui_MainWindow, ImportsTableViewer, Importer, ExportsTableViewer, Exporter, Responder, Menu, DefendersTableViewer, ParticipantsTableViewer, Loader
+from frontend import Ui_MainWindow, ImportsTableViewer, Importer, ExportsTableViewer, Exporter, Responder, Menu, DefendersTableViewer, ParticipantsTableViewer, Loader, StatTableViewer
 
 import pyexcel
 import pyexcel_io
@@ -33,6 +33,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.menu = Menu(self)
         # таб статистики
         self.tabWidget.setTabIcon(0, QIcon(self.app.storage.images.stat.path))
+        self.stat = StatTableViewer(self)
         # таб с загрузками
         self.tabWidget.setTabIcon(1, QIcon(self.app.storage.images.imports.path))
         self.importer = Importer(self)

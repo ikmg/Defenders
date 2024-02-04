@@ -149,6 +149,7 @@ class Storage(Root):
         self.exports = self.root.add_dir('exports')
         self.images = Images(self.root.add_dir('images'))
         self.orders = self.root.add_dir('orders')
+        self.stat = self.root.add_dir('stat')
 
 
 class Eskk(Root):

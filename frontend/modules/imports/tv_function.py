@@ -1,7 +1,7 @@
 import operator
 
 from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PyQt5.QtGui import QBrush, QIcon
+from PyQt5.QtGui import QBrush, QIcon, QGuiApplication
 from PyQt5.QtWidgets import QAction, QMessageBox
 
 from .tv_data import ImportData, ImportsListData
@@ -18,6 +18,10 @@ class ImportsTableViewer:
     def init_context_menu(self):
         self.main.tableView_imports.setContextMenuPolicy(Qt.ActionsContextMenu)
 
+        copy_contacts = QAction(self.main.tableView_imports)
+        copy_contacts.setText('Копировать контакт в буфер...')
+        copy_contacts.triggered.connect(self.copy_contacts)
+
         received_file = QAction(self.main.tableView_imports)
         received_file.setText('Поступивший файл')
         received_file.setIcon(QIcon(self.main.app.storage.images.open.path))
@@ -33,8 +37,11 @@ class ImportsTableViewer:
         protocol_identify.setIcon(QIcon(self.main.app.storage.images.init_p.path))
         protocol_identify.triggered.connect(self.create_init_protocol)
 
-        separator = QAction(self.main.tableView_imports)
-        separator.setSeparator(True)
+        separator1 = QAction(self.main.tableView_imports)
+        separator1.setSeparator(True)
+
+        separator2 = QAction(self.main.tableView_imports)
+        separator2.setSeparator(True)
 
         result_file = QAction(self.main.tableView_imports)
         result_file.setText('Результирующий файл')
@@ -51,13 +58,20 @@ class ImportsTableViewer:
         delete_file.setIcon(QIcon(self.main.app.storage.images.delete.path))
         delete_file.triggered.connect(self.delete_import)
 
+        self.main.tableView_imports.addAction(copy_contacts)
+        self.main.tableView_imports.addAction(separator1)
         self.main.tableView_imports.addAction(received_file)
         self.main.tableView_imports.addAction(protocol_import)
         self.main.tableView_imports.addAction(protocol_identify)
-        self.main.tableView_imports.addAction(separator)
+        self.main.tableView_imports.addAction(separator2)
         self.main.tableView_imports.addAction(result_file)
         self.main.tableView_imports.addAction(import_finished)
         self.main.tableView_imports.addAction(delete_file)
+
+    def copy_contacts(self):
+        import_item = self.selected_import()
+        clipboard = QGuiApplication.clipboard()
+        clipboard.setText(import_item.model.contact_info)
 
     def get_table_content(self):
         table_model = ImportsTableModel(self.main.app)

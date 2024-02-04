@@ -3,7 +3,6 @@ from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PyQt5.QtGui import QIcon, QBrush
 from PyQt5.QtWidgets import QAction, QMessageBox
 
-from tools import File
 from .tv_data import ExportData, ExportsListData
 
 

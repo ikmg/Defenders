@@ -124,7 +124,6 @@ class ImportData:
     @property
     def original_file(self):
         return self.app.root.add_file(self.model.instance_filename)
-        # File(self.model.instance_filename)
 
     @property
     def result_file(self):
@@ -138,10 +137,6 @@ class ImportsListData:
     def __init__(self, app):
         self.app = app
         self.rows = []
-        # self.records_count = RecordCount()
-        # self.unique_subjects = set()
-        # self.period = {'min': None, 'max': None}
-        # self.total_finished = 0
 
     @property
     def session(self):
@@ -156,51 +151,5 @@ class ImportsListData:
             imported = ImportData(self.app)
             imported.model = model
             imported.parse_import()
-
-            # self.unique_subjects.add(imported.model.eskk_military_subject_id)
-            # self.records_count.total += imported.record_count.total
-            # self.records_count.sended += imported.record_count.sended
-            # self.records_count.on_send += imported.record_count.on_send
-            # self.records_count.answered += imported.record_count.answered
-            #
-            # if not self.period['min'] and not self.period['max']:
-            #     self.period['min'] = imported.model.created_utc
-            #     self.period['max'] = imported.model.created_utc
-            #
-            # if imported.model.created_utc < self.period['min']:
-            #     self.period['min'] = imported.model.created_utc
-            #
-            # if imported.model.created_utc > self.period['max']:
-            #     self.period['max'] = imported.model.created_utc
-            #
-            # if imported.model.is_finished:
-            #     self.total_finished += 1
-
             self.rows.append([str(index + 1).zfill(zero_count)] + imported.table_model_row())
-        # self.rows.append(self.total_row())
         return self.rows
-
-    # @property
-    # def period_days(self):
-    #     if self.period['max'] and self.period['min']:
-    #         return (self.period['max'] - self.period['min']).days
-    #     else:
-    #         # если нет записей в БД
-    #         return 0
-
-    # def total_row(self):
-    #     return [
-    #         'ИТОГО',
-    #         '{} дня(ей)'.format(self.period_days),
-    #         '{} файла(ов)'.format(len(self.rows)),
-    #         '{} субъекта(ов)'.format(len(self.unique_subjects)),
-    #         self.records_count.total,
-    #         self.records_count.on_send,
-    #         self.records_count.sended,
-    #         self.records_count.answered,
-    #         'Справочно: не отправлено {}, нет ответов {}'.format(
-    #             self.records_count.on_send - self.records_count.sended,
-    #             self.records_count.sended - self.records_count.answered
-    #         ),
-    #         self.total_finished
-    #     ]

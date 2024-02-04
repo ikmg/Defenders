@@ -18,9 +18,11 @@ class ParticipantsTableViewer:
         pass
 
     def get_table_content(self):
+        self.main.lineEdit_find_order_person.setEnabled(False)
         table_model = ParticipantsTableModel(self.main.app, self.main.lineEdit_find_order_person.text())
         self.main.tableView_order_persons.setModel(table_model)
         self.main.tableView_order_persons.resizeColumnsToContents()
+        self.main.lineEdit_find_order_person.setEnabled(True)
 
 
 class ParticipantsTableModel(QAbstractTableModel):
