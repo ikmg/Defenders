@@ -1,16 +1,19 @@
 def clear_string(value):
-    result = str(value)
-    result = result.replace('\r', ' ')
-    result = result.replace('\n', ' ')
-    result = result.strip()
-    while '  ' in result:
-        result = result.replace('  ', ' ')
-    result = (result.replace('‐', '-')
-              .replace('–', '-')
-              .replace('—', '-')
-              .replace('−', '-'))
-    result = change_e_symbol(result)
-    return result
+    if value:
+        result = str(value)
+        result = result.replace('\r', ' ')
+        result = result.replace('\n', ' ')
+        result = result.strip()
+        while '  ' in result:
+            result = result.replace('  ', ' ')
+        result = (result.replace('‐', '-')
+                  .replace('–', '-')
+                  .replace('—', '-')
+                  .replace('−', '-'))
+        result = change_e_symbol(result)
+        return result
+    else:
+        return ''
 
 
 def change_e_symbol(value):

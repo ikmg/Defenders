@@ -94,7 +94,10 @@ class ToDateTime:
         res = self.eng_short_format()
         if res:
             return res
-        res = self.rus_format()
+        res = self.rus_format1()
+        if res:
+            return res
+        res = self.rus_format2()
         if res:
             return res
         res = self.oth_format(once)
@@ -114,10 +117,17 @@ class ToDateTime:
         except:
             return None
 
-    def rus_format(self):
+    def rus_format1(self):
         """В относительно русском формате, но встречается"""
         try:
             return datetime.strptime(str(self.value), '%d-%m-%Y %H:%M:%S')
+        except:
+            return None
+
+    def rus_format2(self):
+        """В относительно русском формате, но встречается"""
+        try:
+            return datetime.strptime(str(self.value), '%d.%m.%Y %H:%M:%S')
         except:
             return None
 
