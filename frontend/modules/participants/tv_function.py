@@ -1,6 +1,7 @@
 import operator
 
 from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
+from PyQt5.QtWidgets import QMessageBox
 
 from .tv_data import ParticipantsListData
 
@@ -18,19 +19,19 @@ class ParticipantsTableViewer:
         pass
 
     def get_table_content(self):
-        self.main.lineEdit_find_order_person.setEnabled(False)
         table_model = ParticipantsTableModel(self.main.app, self.main.lineEdit_find_order_person.text())
         self.main.tableView_order_persons.setModel(table_model)
         self.main.tableView_order_persons.resizeColumnsToContents()
-        self.main.lineEdit_find_order_person.setEnabled(True)
+        if self.main.lineEdit_find_order_person.text():
+            QMessageBox.information(self.main, 'Результат', 'Найдено {} записей'.format(len(table_model._data_)))
 
 
 class ParticipantsTableModel(QAbstractTableModel):
 
     def __init__(self, app, filter_text=None):
         super(QAbstractTableModel, self).__init__()
-        self.headers = ['rank', 'fio', 'personal_number', 'subject']
-        self.description = ['Звание', 'Фамилия, имя, отчество', 'Личный номер', 'Субъект']
+        self.headers = ['number', 'rank', 'fio', 'personal_number', 'subject']
+        self.description = ['№', 'Звание', 'Фамилия, имя, отчество', 'Личный номер', 'Субъект']
         self._data_ = ParticipantsListData(app).get_data(filter_text)  # отображаемые записи в таблице
 
     def sort(self, Ncol, order):

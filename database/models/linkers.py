@@ -103,6 +103,14 @@ class LinkedOrderFIO(BaseModel):
     picked_first_name = relationship('PickedFirstName', uselist=False, lazy=True)
     picked_middle_name = relationship('PickedMiddleName', uselist=False, lazy=True)
 
+    @hybrid_property
+    def person_appeal(self):
+        return '{} {} {}'.format(
+                self.picked_last_name.value,
+                self.picked_first_name.value,
+                self.picked_middle_name.value
+            )
+
 
 # ---------------------------------------------------------------------
 #                    КОМПОНОВЩИКИ ВТОРОГО УРОВНЯ

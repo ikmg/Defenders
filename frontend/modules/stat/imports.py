@@ -135,13 +135,16 @@ class ImportCountTableView(TableView):
             result['subjects']['unique'].add(model.eskk_military_subject_id)
             result['persons']['count'] += len(model.keeped_report_records)
 
+            correction_on_send = 0
+            correction_sended = 0
+
             for record in model.keeped_report_records:
                 # записей на отправку
                 if record.critical_messages == '' and record.is_find_in_orders:
-                    result['on_send']['count'] += 1
+                    correction_on_send +=1
                 # записей отправлено
                 if record.provided_report_record:
-                    result['sended']['count'] += 1
+                    correction_sended += 1
                 # получено ответов
                 if record.provided_report_record:
                     if record.provided_report_record.answer_init:
@@ -150,15 +153,17 @@ class ImportCountTableView(TableView):
             if not result['period']['min'] and not result['period']['max']:
                 result['period']['min'] = model.created_utc
                 result['period']['max'] = model.created_utc
-
-            if model.created_utc < result['period']['min']:
+            elif model.created_utc < result['period']['min']:
                 result['period']['min'] = model.created_utc
-
-            if model.created_utc > result['period']['max']:
+            elif model.created_utc > result['period']['max']:
                 result['period']['max'] = model.created_utc
 
-        if result['sended']['count'] > result['on_send']['count']:
-            result['on_send']['count'] = result['sended']['count']
+            # коррекция для первых выгрузок
+            result['sended']['count'] += correction_sended
+            if correction_sended > correction_on_send:
+                result['on_send']['count'] += correction_sended
+            else:
+                result['on_send']['count'] += correction_on_send
 
         self._data_.append(['Файлы', ''])
         self._data_.append([result['imports']['name'], result['imports']['count']])

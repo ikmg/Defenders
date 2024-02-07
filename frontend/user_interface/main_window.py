@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowBNgYqm.ui'
+## Form generated from reading UI file 'main_windowEvLwLT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -430,7 +430,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

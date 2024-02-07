@@ -1,6 +1,7 @@
 import operator
 
 from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
+from PyQt5.QtWidgets import QMessageBox
 
 from .tv_data import DefendersListData
 
@@ -21,6 +22,8 @@ class DefendersTableViewer:
         table_model = DefendersTableModel(self.main.app, self.main.lineEdit_find_defender.text())
         self.main.tableView_defenders.setModel(table_model)
         self.main.tableView_defenders.resizeColumnsToContents()
+        if self.main.lineEdit_find_defender.text():
+            QMessageBox.information(self.main, 'Результат', 'Найдено {} записей'.format(len(table_model._data_)))
 
 
 class DefendersTableModel(QAbstractTableModel):

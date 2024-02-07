@@ -20,11 +20,7 @@ class ParticipantData:
     def table_model_row(self):
         return [
             self.model.picked_military_rank.value,
-            '{} {} {}'.format(
-                self.model.linked_order_fio.picked_last_name.value,
-                self.model.linked_order_fio.picked_first_name.value,
-                self.model.linked_order_fio.picked_middle_name.value
-            ),
+            self.model.linked_order_fio.person_appeal,
             self.model.picked_personal_number.value,
             self.model.picked_military_subject.value
         ]
@@ -73,6 +69,6 @@ class ParticipantsListData:
                 participant = ParticipantData(self.app)
                 participant.model = model
                 rows.append([str(index + 1).zfill(zero_count)] + participant.table_model_row())
-        if not rows:
-            rows.append(['---', 'Уточните критерии поиска'])
+        # if not rows:
+        #     rows.append(['---', 'Уточните критерии поиска'])
         return rows
