@@ -1,4 +1,6 @@
-from database import Connection, DefenderParameter
+from sqlalchemy.sql.operators import like_op
+
+from database import Connection, DefenderParameter, LinkedPerson
 from backend import dict_from_ini
 from backend import eskk_genders_upload, eskk_document_types_upload, eskk_military_ranks_upload, eskk_military_subjects_upload
 
@@ -11,7 +13,7 @@ from tools.date_time import DateTimeConvert
 # В - ВИНТОВКА
 # Г - ГАРДА
 APP_VERSION = 'АЛЕБАРДА'
-APP_RELEASE = '04.02.2024'
+APP_RELEASE = '13.02.2024'
 
 
 class Root:
@@ -99,11 +101,10 @@ class DefendersApp(Root):
 
     @property
     def version(self):
-        # return 'v. {} от {}'.format(
-        #     self.get_param('version'),
-        #     self.get_param('release')
-        # )
-        return self.get_param('version')
+        return 'v. {} {}'.format(
+            self.get_param('version'),
+            self.get_param('release')
+        )
 
 
 class Settings:
@@ -130,6 +131,7 @@ class Database:
         self.uri = '{}:///{}'.format(dialect, self.file.path)
         self.connection = Connection(self.uri, echo_mode)
         self.connection.create_db()
+        self.patcher()
 
     def __repr__(self):
         return self.file.path
@@ -137,6 +139,13 @@ class Database:
     @property
     def session(self):
         return self.connection.session
+
+    def patcher(self):
+        # патч наличия времени в дате рождения
+        models = self.session.query(LinkedPerson).filter(like_op(LinkedPerson.birthday, '% 00:00:00')).all()
+        if models:
+            for model in models:
+                model.birthday = model.birthday.replace(' 00:00:00', '')
 
 
 class Storage(Root):

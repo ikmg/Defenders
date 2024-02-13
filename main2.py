@@ -1,17 +1,24 @@
-import os
 import sys
 
-from PyQt5.QtCore import Qt, QLockFile
 from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import Qt, QLockFile
 from PyQt5.QtWidgets import QMainWindow, QSplashScreen, QApplication, QMessageBox
 
 from backend import DefendersApp
-from frontend import Ui_MainWindow, ImportsTableViewer, Importer, ExportsTableViewer, Exporter, Responder, Menu, DefendersTableViewer, ParticipantsTableViewer, Loader, StatTableViewer
+from frontend import Ui_MainWindow, Menu  # интерфейс и меню
+from frontend import StatTableViewer  # таб Статистика
+from frontend import ImportsTableViewer, Importer  # таб Загрузки
+from frontend import ExportsTableViewer, Exporter, Responder  # таб Выгрузки
+from frontend import DefendersTableViewer  # таб Защитники
+from frontend import ParticipantsTableViewer, Loader  # таб Участники
+from tools import File
 
+# надо
 import pyexcel
 import pyexcel_io
 import pyexcel_ods
 import pyexcel_xls
+from pyexcel_io import writers
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -56,7 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == '__main__':
-    lock_file = QLockFile(os.path.abspath(".lock"))
+    lock_file = QLockFile(File(".lock").path)
     if not lock_file.tryLock():
         a = QApplication([])
         QMessageBox.critical(None, "Ошибка", "Приложение уже запущено!")

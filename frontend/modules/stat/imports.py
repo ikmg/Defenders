@@ -11,8 +11,8 @@ class ImportSubjectsTableView(TableView):
     def __init__(self, app):
         self.app = app
         super().__init__(self.app.database.session)
-        self.headers = ['number', 'subject', 'files', 'finished', 'persons', 'sended', 'answered', 'status']
-        self.description = ['№', 'Субъект', 'Файлов', 'Завершено', 'Персон', 'Отправлено', 'Ответов', 'Статус']
+        self.headers = ['number', 'subject', 'files', 'finished', 'persons', 'on_send', 'sended', 'answered', 'status']
+        self.description = ['№', 'Субъект', 'Файлов', 'Завершено', 'Персон', 'К отправке', 'Отправлено', 'Ответов', 'Статус']
         self.get_data()
 
     def get_data(self):
@@ -22,6 +22,7 @@ class ImportSubjectsTableView(TableView):
                 'files': 0,
                 'finished': 0,
                 'persons': 0,
+                'on_send': 0,
                 'sended': 0,
                 'answered': 0
             }
@@ -33,6 +34,7 @@ class ImportSubjectsTableView(TableView):
                 'files': 0,
                 'finished': 0,
                 'persons': 0,
+                'on_send': 0,
                 'sended': 0,
                 'answered': 0
             })
@@ -45,6 +47,8 @@ class ImportSubjectsTableView(TableView):
                     subject['finished'] += 1 if model.is_finished else 0
                     subject['persons'] += len(model.keeped_report_records)
                     for record in model.keeped_report_records:
+                        if record.critical_messages == '' and record.is_find_in_orders:
+                            subject['on_send'] += 1
                         if record.provided_report_record:
                             subject['sended'] += 1
                             if record.provided_report_record.answer_init:
@@ -64,12 +68,17 @@ class ImportSubjectsTableView(TableView):
                 else:
                     status = 'Интересный статус'
 
+                # Обманка интерфейса с количеством записей первых отправок (отправлено больше чем подходит на отправку)
+                if row['sended'] > row['on_send']:
+                    row['on_send'] = row['sended']
+
                 self._data_.append([
                     number,
                     row['subject'],
                     row['files'],
                     row['finished'],
                     row['persons'],
+                    row['on_send'],
                     row['sended'],
                     row['answered'],
                     status
@@ -77,6 +86,7 @@ class ImportSubjectsTableView(TableView):
                 total['files'] += row['files']
                 total['finished'] += row['finished']
                 total['persons'] += row['persons']
+                total['on_send'] += row['on_send']
                 total['sended'] += row['sended']
                 total['answered'] += row['answered']
         self._data_.append([
@@ -85,6 +95,7 @@ class ImportSubjectsTableView(TableView):
             total['files'],
             total['finished'],
             total['persons'],
+            total['on_send'],
             total['sended'],
             total['answered']
         ])

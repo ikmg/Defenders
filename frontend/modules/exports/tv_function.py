@@ -140,7 +140,7 @@ class ExportsTableModel(QAbstractTableModel):
                 return value
         elif role == Qt.BackgroundRole:
             if self._data_[index.row()][5] == 'OK':
-                return QBrush(Qt.darkGreen)
+                return QBrush(Qt.darkGray)
 
     def rowCount(self, parent=QModelIndex()):
         return len(self._data_)
