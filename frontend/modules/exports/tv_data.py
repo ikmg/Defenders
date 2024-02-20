@@ -1,6 +1,6 @@
 from backend import csv_from_list, export_data
 from database import ProvidedReport
-from tools import DateTimeConvert
+from tools import DTConvert
 
 
 class ExportData:
@@ -29,7 +29,7 @@ class ExportData:
     def table_model_row(self):
         return [
             self.model.id,
-            DateTimeConvert(self.model.created_utc).string,  # должно быть дата/время
+            DTConvert(self.model.created_utc).dtstring,  # должно быть дата/время
             len(self.model.provided_report_records),
             self.model.answer_import.reg_number if self.model.answer_import else 'Протокол не поступал',
             self.model.answer_import.result if self.model.answer_import else '---'

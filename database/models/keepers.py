@@ -69,7 +69,7 @@ class KeepedOrderRecord(KeeperRecordModel):
     linked_order_person_period_id = Column(String, ForeignKey('linked_order_person_periods.id', ondelete='CASCADE'), nullable=False, doc='Строка приказа с периодом участия в СВО')
 
     keeped_order = relationship('KeepedOrder', uselist=False, lazy=True)
-    linked_order_person_period = relationship('LinkedOrderPersonPeriod', uselist=False, lazy=True)
+    linked_order_person_periods = relationship('LinkedOrderPersonPeriod', uselist=True, lazy=True)
 
 
 class KeepedReportRecord(KeeperRecordModel):

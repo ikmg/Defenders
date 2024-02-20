@@ -4,8 +4,7 @@ from database import Connection, DefenderParameter, LinkedPerson
 from backend import dict_from_ini
 from backend import eskk_genders_upload, eskk_document_types_upload, eskk_military_ranks_upload, eskk_military_subjects_upload
 
-from tools.filesystem import Directory, File, work_directory
-from tools.date_time import DateTimeConvert
+from tools import Directory, File, work_directory, DTConvert
 
 # НАЗВАНИЯ ВЕРСИЙ - НАЗВАНИЯ ОРУДИЙ - ПО АЛФАВИТУ
 # А - АЛЕБАРДА
@@ -94,7 +93,7 @@ class DefendersApp(Root):
         eskk_military_subjects_upload(self.database.session, self.storage.eskk.military_subjects)
 
     def print_log(self, text: str):
-        log_row = [DateTimeConvert().string, text]
+        log_row = [DTConvert().dtstring, text]
         self.log.append(log_row)
         if self.settings.debug_mode:
             print(' '.join(log_row))
@@ -145,7 +144,19 @@ class Database:
         models = self.session.query(LinkedPerson).filter(like_op(LinkedPerson.birthday, '% 00:00:00')).all()
         if models:
             for model in models:
-                model.birthday = model.birthday.replace(' 00:00:00', '')
+                birthday = model.birthday.replace(' 00:00:00', '')
+                model_exists = self.session.query(LinkedPerson).filter(
+                    LinkedPerson.picked_snils_id == model.picked_snils_id,
+                    LinkedPerson.picked_last_name_id == model.picked_last_name_id,
+                    LinkedPerson.picked_first_name_id == model.picked_first_name_id,
+                    LinkedPerson.picked_middle_name_id == model.picked_middle_name_id,
+                    LinkedPerson.birthday == birthday
+                ).scalar()
+                if model_exists:
+                    print('FUCKING SHIT! Linked person id: <{}>, birthday {} already exists as id <{}>'.format(model.id, birthday, model_exists.id))
+                else:
+                    model.birthday = birthday
+        self.session.commit()
 
 
 class Storage(Root):
@@ -155,7 +166,7 @@ class Storage(Root):
         self.answers = self.root.add_dir('answers')
         self.imports = self.root.add_dir('defenders')
         self.eskk = Eskk(self.root.add_dir('eskk'))
-        self.exports = self.root.add_dir('exports')
+        self.exports = self.root.add_dir('export')
         self.images = Images(self.root.add_dir('images'))
         self.orders = self.root.add_dir('orders')
         self.stat = self.root.add_dir('stat')

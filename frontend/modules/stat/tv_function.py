@@ -1,8 +1,9 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
-from tools import DateTimeConvert
+from tools import DTConvert
 from .imports import ImportSubjectsTableView, ImportCountTableView
+from .participants import ParticipantsTableView, ParticipantsErrorsTableView
 
 
 class StatTableViewer:
@@ -12,13 +13,15 @@ class StatTableViewer:
         self.main.tableView_statistic_data.setSortingEnabled(False)
         self.main.pushButton_save_statistic.setIcon(QIcon(self.main.app.storage.images.orders.path))
         self.main.pushButton_save_statistic.pressed.connect(self.download)
-        self.main.pushButton_save_statistic.pressed.connect(self.download)
+        # self.main.pushButton_save_statistic.pressed.connect(self.download)
         self.stat_types = {
             'import_count': {'index': 0, 'name': 'Загруженные файлы (количество)', 'table_view': ImportCountTableView},
             'import_subjects': {'index': 1, 'name': 'Загруженные файлы (по субъектам)', 'table_view': ImportSubjectsTableView},
+            'participants_count': {'index': 2, 'name': 'Участники (по периодам)', 'table_view': ParticipantsTableView},
+            'participants_errors': {'index': 3, 'name': 'Приказы (ошибки)', 'table_view': ParticipantsErrorsTableView}
             # 'export_files': {'index': 2, 'name': 'Выгруженные файлы', 'table_view': None},
             # 'defenders_count': {'index': 3, 'name': 'Защитники Отечества', 'table_view': None},
-            # 'participants_count': {'index': 4, 'name': 'Участники', 'table_view': None}
+
         }
         self.current_type = None
         self.table_model = None
@@ -27,7 +30,7 @@ class StatTableViewer:
 
     def download(self):
         if self.current_type and self.table_model:
-            file_name = '{}_{}.csv'.format(self.current_type, DateTimeConvert().date)
+            file_name = '{}_{}.csv'.format(self.current_type, DTConvert().date)
             destination = self.main.app.storage.stat.add_file(file_name)
             self.table_model.download(destination.path)
             destination.start()

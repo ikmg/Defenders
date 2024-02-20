@@ -1,4 +1,4 @@
-from tools import DateTimeConvert
+from tools import DTConvert
 from .base import BaseWorkbook
 
 
@@ -9,7 +9,7 @@ class AnswerImportWorkbook(BaseWorkbook):
 
     def worksheet_data(self):
         return {
-            'date': DateTimeConvert(self.get_row_num_data(3)[1]).date,
+            'date': DTConvert(self.get_row_num_data(3)[1]).date,
             'reg_num': self.get_row_num_data(4)[1],
             'user': self.get_row_num_data(5)[1],
             'result': self.get_row_num_data(9)[1]
@@ -29,8 +29,8 @@ class AnswerInitWorkbook(BaseWorkbook):
                 row = {
                     'number': int(row_val[0]),
                     'fio': row_val[1].replace(u'\ufeff', '', 1),
-                    'birthday': DateTimeConvert(row_val[2]).date,
-                    'init_date': DateTimeConvert(row_val[3]).datetime,
+                    'birthday': DTConvert(row_val[2]).date,
+                    'init_date': DTConvert(row_val[3]).datetime,
                     'status': row_val[4] if row_val[4] else '',
                     'comment': row_val[5] if row_val[5] else '',
                     'provided_report_record_id': None

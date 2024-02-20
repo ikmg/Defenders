@@ -3,7 +3,7 @@ from sqlalchemy.sql.operators import ilike_op
 from database import EskkMilitarySubject, KeepedOrderRecord, LinkedOrderPersonPeriod
 from database import PickedPersonalNumber, KeepedReportRecord, KeepedReport
 from database import LinkedOrderFIO, LinkedOrderPerson, KeepedOrder
-from tools.date_time import DateTimeConvert
+from tools import DTConvert
 
 from .base import BaseKeeperFileHandler, BaseKeeperRecordHandler
 from .linker import LinkedDefenderHandler, LinkedOrderPersonPeriodHandler
@@ -237,4 +237,4 @@ class KeepedOrderRecordHandler(BaseKeeperRecordHandler):
 
 
 def print_log(text):
-    print('{}: {}'.format(DateTimeConvert().string, text))
+    print('{}: {}'.format(DTConvert().dtstring, text))

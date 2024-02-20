@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from database import KeepedReportRecord, ProvidedReportRecord, ProvidedReport
-from tools.date_time import DateTimeConvert
+from tools import DTConvert
 
 
 class ProvidedReportHandler:
@@ -26,7 +26,7 @@ class ProvidedReportHandler:
 
     def make_export(self):
         model_export = ProvidedReport()
-        model_export.created_utc = DateTimeConvert().value
+        model_export.created_utc = DTConvert().datetime
         model_export.id = model_export.created_utc.strftime('%Y%m%d-%H%M%S')
         self.session.add(model_export)
         self.session.flush()
@@ -34,7 +34,7 @@ class ProvidedReportHandler:
         for index, record in enumerate(self.rows):
             model_row = ProvidedReportRecord()
             model_row.id = str(uuid4())
-            model_row.created_utc = DateTimeConvert().value
+            model_row.created_utc = DTConvert().datetime
             model_row.provided_report_id = model_export.id
             model_row.row_number = index + 1
             model_row.keeped_report_record_id = record.id

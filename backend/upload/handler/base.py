@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import uuid4
 
-from tools.date_time import DateTimeConvert
+from tools import DTConvert
 
 
 class BaseHandler(ABC):
@@ -14,7 +14,7 @@ class BaseHandler(ABC):
         self._session_ = session
         self._class_name_ = class_model
         self.id = str(uuid4())  # идентификатор для модели данных по-умолчанию
-        self.created_utc = DateTimeConvert().value   # временная метка создания данных для модели по-умолчанию
+        self.created_utc = DTConvert().datetime   # временная метка создания данных для модели по-умолчанию
         self.model = None  # модель данных если данные еще не присутствуют в базе данных
         self.is_already_exists = False  # признак того, что данные уже присутствуют в базе данных
         self.warning_messages = []  # список предупреждений

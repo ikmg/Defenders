@@ -1,5 +1,5 @@
 from database import KeepedReport, KeepedReportRecord
-from tools import DateTimeConvert
+from tools import DTConvert
 
 
 def protocol_import_data(session, import_id):
@@ -16,10 +16,10 @@ def protocol_import_data(session, import_id):
     ]
     report = session.query(KeepedReport).filter(KeepedReport.id == import_id).scalar()
     row = [
-        DateTimeConvert(report.created_utc).string,  # должно быть дата/время
+        DTConvert(report.created_utc).dtstring,  # должно быть дата/время
         report.eskk_military_subject.short_name,
         report.id,
-        DateTimeConvert().string,  # должно быть дата/время
+        DTConvert().dtstring,  # должно быть дата/время
         'Да' if report.is_loaded else 'Нет',
         report.note
     ]
@@ -51,7 +51,7 @@ def protocol_init_data(session, import_id):
             record.file_row_num,
             record.linked_defender.linked_person.person_appeal,
             record.linked_defender.linked_person.birthday,
-            DateTimeConvert(record.created_utc).string,  # должно быть дата/время
+            DTConvert(record.created_utc).dtstring,  # должно быть дата/время
             record.warning_messages,
             record.critical_messages
         ]

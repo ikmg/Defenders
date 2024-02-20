@@ -135,6 +135,8 @@ class LinkedOrderPerson(BaseModel):
     picked_military_subject = relationship('PickedMilitarySubject', uselist=False, lazy=True)
     linked_order_fio = relationship('LinkedOrderFIO', uselist=False, lazy=True)
 
+    linked_order_person_periods = relationship('LinkedOrderPersonPeriod', back_populates='linked_order_person', uselist=True, lazy=True)
+
 
 class LinkedDefender(BaseModel):
     __tablename__ = 'linked_defenders'
@@ -178,4 +180,5 @@ class LinkedOrderPersonPeriod(BaseModel):
     date_end = Column(String, primary_key=True, nullable=False)
     days_count = Column(Integer, nullable=False)
 
-    linked_order_person = relationship('LinkedOrderPerson', uselist=False, lazy=True)
+    linked_order_person = relationship('LinkedOrderPerson', back_populates='linked_order_person_periods', uselist=False, lazy=True)
+    # keeped_order_record = relationship('KeepedOrderRecord', back_populates='linked_order_person_periods', uselist=False, lazy=True)

@@ -104,7 +104,6 @@ class Importer:
                     workbook.workbook.select_worksheet(self.main.comboBox_import_worksheet.currentText())
                     workbook.upload(destination.path, self.main.lineEdit_contacts.text())
                     self.main.lineEdit_contacts.clear()
-                    # self.main.label_export_allow.setText(self.set_export_count())
                     QMessageBox.information(self.main, 'Загрузка файла', 'Файл успешно загружен')
                     self.main.imports_table_view.get_table_content()
                 except Exception as e:

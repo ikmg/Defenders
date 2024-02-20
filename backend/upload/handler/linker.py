@@ -11,7 +11,7 @@ from .picker import (PickedAddressIndexHandler, PickedAddressRegionHandler, Pick
                PickedAddressStreetHandler, PickedAddressHouseHandler, PickedAddressBuildingHandler, PickedAddressFlatHandler)
 from .picker import PickedMilitaryRankHandler, PickedPersonalNumberHandler, PickedMilitarySubjectHandler
 
-from tools.date_time import DateTimeConvert
+from tools import DTConvert
 from tools.strings import clear_string, get_fio_list
 from tools.reg_exp import re_full_match
 
@@ -31,7 +31,7 @@ class LinkedPersonHandler(BaseHandler):
 
     @property
     def birthday_date(self):
-        return DateTimeConvert(self.birthday).date  # должна быть строка
+        return DTConvert(self.birthday).date  # должна быть строка
 
     def is_gender_exists(self):
         model = self._session_.query(EskkGender).filter(
@@ -104,7 +104,7 @@ class LinkedPersonHandler(BaseHandler):
         # проверка даты рождения
         if self.birthday:
             if self.birthday_date:
-                if self.age(18) > DateTimeConvert().date:
+                if self.age(18) > DTConvert().date:
                     self.critical_messages.append('<Персона> должна быть старше 18 лет ={}'.format(self.birthday))
             else:
                 self.critical_messages.append('<Дата рождения> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.birthday))
@@ -126,7 +126,7 @@ class LinkedPersonHandler(BaseHandler):
                 self.warning_messages.append('<СНИЛС> уже идентифицировался ({})'.format(', '.join(persons)))
         # проверка повторной идентификации персоны
         if self.is_already_exists:
-            self.warning_messages.append('<Персона> уже идентифицировалась {}'.format(DateTimeConvert(self.created_utc).string))  # должно быть дата/время
+            self.warning_messages.append('<Персона> уже идентифицировалась {}'.format(DTConvert(self.created_utc).dtstring))  # должно быть дата/время
         # сбор всех ошибок
         self.warning_messages = (self.warning_messages + self.picked_snils.warning_messages + self.picked_last_name.warning_messages +
                                  self.picked_first_name.warning_messages + self.picked_middle_name.warning_messages)
@@ -148,7 +148,7 @@ class LinkedDocumentHandler(BaseHandler):
 
     @property
     def document_date(self):
-        return DateTimeConvert(self.date).date  # должна быть строка
+        return DTConvert(self.date).date  # должна быть строка
 
     def is_document_type_exists(self):
         model = self._session_.query(EskkDocumentType).filter(
@@ -208,7 +208,7 @@ class LinkedDocumentHandler(BaseHandler):
         # проверка даты документа
         if self.date:
             if self.document_date:
-                if self.document_date > DateTimeConvert().date:
+                if self.document_date > DTConvert().date:
                     self.critical_messages.append('<Дата документа> содержит значение старше текущей даты ={}'.format(self.date))
             else:
                 self.critical_messages.append('<Дата документа> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.date))
@@ -240,7 +240,7 @@ class LinkedDocumentVBDHandler(BaseHandler):
 
     @property
     def document_date(self):
-        return DateTimeConvert(self.date).date  # должна быть строка
+        return DTConvert(self.date).date  # должна быть строка
 
     def _find_(self):
         model = self._session_.query(self._class_name_).filter(
@@ -286,9 +286,9 @@ class LinkedDocumentVBDHandler(BaseHandler):
         # проверка даты документа
         if self.date:
             if self.document_date:
-                if self.document_date > DateTimeConvert().date:
+                if self.document_date > DTConvert().date:
                     self.critical_messages.append('<Дата УВБД> содержит значение старше текущей даты ={}'.format(self.date))
-                elif self.document_date < DateTimeConvert('01.01.2004').date:  # должна быть строка
+                elif self.document_date < DTConvert('01.01.2004').date:  # должна быть строка
                     self.critical_messages.append('<Дата УВБД> содержит значение младше 01.01.2004 ={}'.format(self.date))
             else:
                 self.critical_messages.append('<Дата УВБД> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.date))
@@ -544,7 +544,7 @@ class LinkedDefenderHandler(BaseHandler):
 
     @property
     def exclude_real_date(self):
-        return DateTimeConvert(self.exclude_date).date  # должна быть строка
+        return DTConvert(self.exclude_date).date  # должна быть строка
 
     @property
     def is_success(self):
@@ -663,7 +663,7 @@ class LinkedDefenderHandler(BaseHandler):
         # проверка даты исключения
         if self.exclude_date:
             if self.exclude_real_date:
-                if self.exclude_real_date > DateTimeConvert().date:
+                if self.exclude_real_date > DTConvert().date:
                     self.critical_messages.append('<Дата исключения> старше текущей даты ={}'.format(self.exclude_date))
             else:
                 self.critical_messages.append('<Дата исключения> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.exclude_date))
@@ -689,9 +689,9 @@ class LinkedDefenderHandler(BaseHandler):
                 self.critical_messages.append('<ID ЕРН> не соответствует формату ={}'.format(self.id_ern))
         # проверка действительности паспорта
         if self.linked_document.eskk_document_type_id == '21':
-            if self.linked_document.document_date and self.linked_person.age(20) and self.linked_document.document_date < self.linked_person.age(20) < DateTimeConvert().date:
+            if self.linked_document.document_date and self.linked_person.age(20) and self.linked_document.document_date < self.linked_person.age(20) < DTConvert().date:
                 self.warning_messages.append('<Паспорт> требует замены по достижению возраста 20 лет')
-            if self.linked_document.document_date and self.linked_person.age(45) and self.linked_document.document_date < self.linked_person.age(45) < DateTimeConvert().date:
+            if self.linked_document.document_date and self.linked_person.age(45) and self.linked_document.document_date < self.linked_person.age(45) < DTConvert().date:
                 self.warning_messages.append('<Паспорт> требует замены по достижению возраста 45 лет')
         # проверка даты выдачи УВБД
         if self.linked_person.age(18) and self.linked_document_vbd.document_date and self.linked_person.age(18) > self.linked_document_vbd.document_date:
@@ -713,8 +713,12 @@ class LinkedOrderPersonPeriodHandler(BaseHandler):
         super().__init__(session, LinkedOrderPersonPeriod)
         self.linked_order_person = LinkedOrderPersonHandler(session, **keywords)
         # периоды преобразуем в списки
-        self.begin_list = clear_string(DateTimeConvert(keywords['date_begin']).string).split(' ')  # должна быть дата
-        self.end_list = clear_string(DateTimeConvert(keywords['date_end']).string).split(' ')  # должна быть дата
+        # print(keywords['date_begin'], keywords['date_end'])
+        self.begin_list = clear_string(keywords['date_begin']).replace(' 00:00:00', '').split(' ')  # должна быть дата
+        self.end_list = clear_string(keywords['date_end']).replace(' 00:00:00', '').split(' ')  # должна быть дата
+
+        # self.begin_list = clear_string(DTConvert(keywords['date_begin']).dstring).split(' ')  # должна быть дата
+        # self.end_list = clear_string(DTConvert(keywords['date_end']).dstring).split(' ')  # должна быть дата
         # оставляем пустыми для парсинга
         self.date_begin = None
         self.date_end = None
@@ -722,11 +726,11 @@ class LinkedOrderPersonPeriodHandler(BaseHandler):
 
     @property
     def date_begin_real(self):
-        return DateTimeConvert(self.date_begin).date  # должна быть строка
+        return DTConvert(self.date_begin).date  # должна быть строка
 
     @property
     def date_end_real(self):
-        return DateTimeConvert(self.date_end).date  # должна быть строка
+        return DTConvert(self.date_end).date  # должна быть строка
 
     @property
     def days_count(self):
@@ -757,6 +761,9 @@ class LinkedOrderPersonPeriodHandler(BaseHandler):
                 self.end_list
             ))
         else:
+            # print(self.begin_list)
+            # print(self.end_list)
+            # input('->')
             for index in range(0, len(self.begin_list)):
                 self.date_begin = self.begin_list[index]
                 self.date_end = self.end_list[index]
@@ -767,7 +774,7 @@ class LinkedOrderPersonPeriodHandler(BaseHandler):
                     # self.model = self._class_name_()
                     self.model = LinkedOrderPersonPeriod()
                     self.model.id = str(uuid4())
-                    self.model.created_utc = DateTimeConvert().value
+                    self.model.created_utc = DTConvert().datetime
                     self.model.linked_order_person_id = self.linked_order_person.id
                     self.model.date_begin = self.date_begin
                     self.model.date_end = self.date_end
@@ -779,7 +786,7 @@ class LinkedOrderPersonPeriodHandler(BaseHandler):
     def check(self):
         if self.is_already_exists:
             self.warning_messages.append('<Период> {}-{} для персоны {} уже добавлялся'.format(
-                self.date_begin, self.date_end, self.linked_order_person.person_appeal
+                DTConvert(self.date_begin).dstring, DTConvert(self.date_end).dstring, self.linked_order_person.person_appeal
             ))
         if not self.date_begin_real:
             self.critical_messages.append('<Начало периода> не соответствует формату ={}'.format(self.date_begin))

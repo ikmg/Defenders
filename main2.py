@@ -19,6 +19,7 @@ import pyexcel_io
 import pyexcel_ods
 import pyexcel_xls
 from pyexcel_io import writers
+import openpyxl
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):

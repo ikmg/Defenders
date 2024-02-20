@@ -1,9 +1,7 @@
 from uuid import uuid4
 
-import openpyxl
-
 from database import ProvidedReport, ImportAnswer, InitAnswer
-from tools.date_time import DateTimeConvert
+from tools import DTConvert
 # from tools.dt import string_to_date, string_to_datetime, date_to_string, datetime_timezone
 
 
@@ -27,7 +25,7 @@ class AnswerHandler:
             for row in self.init_data:
                 for record in self.export.provided_report_records:
                     tmp = record.keeped_report_record.linked_defender.linked_person
-                    if row['fio'] == tmp.person_appeal and DateTimeConvert(row['birthday']).string == tmp.birthday:  # должна быть дата
+                    if row['fio'] == tmp.person_appeal and DTConvert(row['birthday']).dstring == tmp.birthday:  # должна быть дата
                         if record.id not in del_list:
                             row['provided_report_record_id'] = record.id
                             del_list.append(record.id)
@@ -35,7 +33,7 @@ class AnswerHandler:
 
             for row in self.init_data:
                 if not row['provided_report_record_id']:
-                    raise ValueError('персона {} ({} г.р.) не выгружалась'. format(row['fio'], DateTimeConvert(row['birthday']).string))
+                    raise ValueError('персона {} ({} г.р.) не выгружалась'. format(row['fio'], DTConvert(row['birthday']).dstring))
 
             for record in self.export.provided_report_records:
                 is_found = False
@@ -53,7 +51,7 @@ class AnswerHandler:
     def save(self):
         answer_import = ImportAnswer()
         answer_import.id = str(uuid4())
-        answer_import.created_utc = DateTimeConvert().value  # должно быть дата/время с часовым поясом
+        answer_import.created_utc = DTConvert().datetime  # должно быть дата/время с часовым поясом
         answer_import.provided_report_id = self.export.id
         answer_import.import_date = self.import_data['date']
         answer_import.reg_number = self.import_data['reg_num']
@@ -69,7 +67,7 @@ class AnswerHandler:
             else:
                 answer_init = InitAnswer()
                 answer_init.id = str(uuid4())
-                answer_init.created_utc = DateTimeConvert().value  # должно быть дата/время с часовым поясом
+                answer_init.created_utc = DTConvert().datetime  # должно быть дата/время с часовым поясом
                 answer_init.provided_report_record_id = row['provided_report_record_id']
                 answer_init.init_date = row['init_date']
                 answer_init.number = row['number']

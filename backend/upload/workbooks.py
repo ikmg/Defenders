@@ -1,7 +1,7 @@
 from .data import ImportWorkbook, OrderWorkbook, AnswerImportWorkbook, AnswerInitWorkbook
 from .handler import KeepedReportHandler, KeepedOrderHandler, AnswerHandler
 
-from tools import DateTimeConvert
+from tools import DTConvert
 
 
 class ImportUploader:
@@ -14,7 +14,7 @@ class ImportUploader:
         self.workbook = ImportWorkbook(file_path)
         self.import_id = '{}-{}'.format(
             self.subject_id.zfill(4),
-            DateTimeConvert().value.strftime('%Y%m%d-%H%M%S')
+            DTConvert().datetime.strftime('%Y%m%d-%H%M%S')
         )
         self.original_file = None
 
@@ -51,7 +51,7 @@ class OrdersUploader:
     def __init__(self, session, file_path):
         self.session = session
         self.workbook = OrderWorkbook(file_path)
-        self.import_id = '{}'.format(DateTimeConvert().value.strftime('%Y%m%d-%H%M%S'))
+        self.import_id = '{}'.format(DTConvert().datetime.strftime('%Y%m%d-%H%M%S'))
         self.original_file = None
 
     def upload(self, destination):

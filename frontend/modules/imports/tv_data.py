@@ -1,6 +1,6 @@
 from database import KeepedReport
 from backend import create_import_protocol, create_init_protocol, create_result_file
-from tools import DateTimeConvert
+from tools import DTConvert
 
 
 class RecordCount:
@@ -63,7 +63,7 @@ class ImportData:
 
     def table_model_row(self):
         return [
-            DateTimeConvert(self.model.created_utc).string,  # должно быть дата/время
+            DTConvert(self.model.created_utc).dtstring,  # должно быть дата/время
             self.model.id,
             self.model.eskk_military_subject.short_name,
             self.record_count.total,

@@ -1,5 +1,5 @@
 from .base import BaseWorkbook
-from tools import DateTimeConvert
+from tools import DTConvert
 
 
 class ImportWorkbook(BaseWorkbook):
@@ -48,7 +48,7 @@ def row_to_dict(row_num, row_val):
                 'first_name': row_val[1],
                 'middle_name': row_val[2],
                 'eskk_gender_id': row_val[3],
-                'birthday': DateTimeConvert(row_val[4]).string,  # должна быть дата
+                'birthday': DTConvert(row_val[4]).dstring,  # должна быть дата
                 'snils': row_val[6]
             },
             'birth_place': row_val[5],
@@ -56,13 +56,13 @@ def row_to_dict(row_num, row_val):
                 'eskk_document_type_id': row_val[7],
                 'serial': row_val[8],
                 'number': row_val[9],
-                'date': DateTimeConvert(row_val[10]).string,  # должна быть дата
+                'date': DTConvert(row_val[10]).dstring,  # должна быть дата
                 'organization': row_val[11]
             },
             'document_vbd': {
                 'serial': row_val[12],
                 'number': row_val[13],
-                'date': DateTimeConvert(row_val[14]).string,  # должна быть дата
+                'date': DTConvert(row_val[14]).dstring,  # должна быть дата
                 'organization': row_val[15]
             },
             'reg_address': {
@@ -87,7 +87,7 @@ def row_to_dict(row_num, row_val):
             },
             'id_ern': row_val[32],
             'subject_name': row_val[33],
-            'exclude_date': DateTimeConvert(row_val[34]).string,  # должна быть дата
+            'exclude_date': DTConvert(row_val[34]).dstring,  # должна быть дата
             'exclude_order': row_val[35],
             'personal_number': row_val[36]
         }
