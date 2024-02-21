@@ -169,3 +169,5 @@ storage/orders/
 storage/test/
 storage/defenders*.db
 test*.py
+test/
+/test/

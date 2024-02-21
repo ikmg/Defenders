@@ -43,16 +43,28 @@ class Count:
             self.unknown += 1
 
     def percent_a(self):
-        return '{}%'.format(round(self.A/self.count*100, 2))
+        if self.count:
+            return '{}%'.format(round(self.A/self.count*100, 2))
+        else:
+            return 0
 
     def percent_pr(self):
-        return '{}%'.format(round(self.PR/self.count*100, 2))
+        if self.count:
+            return '{}%'.format(round(self.PR/self.count*100, 2))
+        else:
+            return 0
 
     def percent_rs(self):
-        return '{}%'.format(round(self.RS/self.count*100, 2))
+        if self.count:
+            return '{}%'.format(round(self.RS/self.count*100, 2))
+        else:
+            return 0
 
     def percent_unk(self):
-        return '{}%'.format(round(self.unknown/self.count*100, 2))
+        if self.count:
+            return '{}%'.format(round(self.unknown/self.count*100, 2))
+        else:
+            return 0
 
     def tv(self):
         result = []

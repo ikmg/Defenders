@@ -1,9 +1,10 @@
 import operator
 
 from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMessageBox, QAction
 
-from .tv_data import ParticipantsListData
+from .tv_data import ParticipantsListData, ParticipantData
 
 
 class ParticipantsTableViewer:
@@ -16,7 +17,20 @@ class ParticipantsTableViewer:
         self.get_table_content()
 
     def init_context_menu(self):
-        pass
+        self.main.tableView_order_persons.setContextMenuPolicy(Qt.ActionsContextMenu)
+
+        person_periods = QAction(self.main.tableView_order_persons)
+        person_periods.setText('Периоды персоны')
+        person_periods.setIcon(QIcon(self.main.app.storage.images.info.path))
+        person_periods.triggered.connect(self.person_periods)
+
+        fio_periods = QAction(self.main.tableView_order_persons)
+        fio_periods.setText('Периоды по ФИО')
+        fio_periods.setIcon(QIcon(self.main.app.storage.images.result.path))
+        fio_periods.triggered.connect(self.fio_periods)
+
+        self.main.tableView_order_persons.addAction(person_periods)
+        self.main.tableView_order_persons.addAction(fio_periods)
 
     def get_table_content(self):
         table_model = ParticipantsTableModel(self.main.app, self.main.lineEdit_find_order_person.text())
@@ -24,6 +38,20 @@ class ParticipantsTableViewer:
         self.main.tableView_order_persons.resizeColumnsToContents()
         if self.main.lineEdit_find_order_person.text():
             QMessageBox.information(self.main, 'Результат', 'Найдено {} записей'.format(len(table_model._data_)))
+
+    def selected_item(self):
+        participant_id = self.main.tableView_order_persons.currentIndex().siblingAtColumn(0).data(Qt.UserRole)
+        participant_item = ParticipantData(self.main.app)
+        participant_item.get_participant(participant_id)
+        return participant_item
+
+    def person_periods(self):
+        participant_item = self.selected_item()
+        QMessageBox.information(self.main, 'Периоды участия', participant_item.person_periods())
+
+    def fio_periods(self):
+        participant_item = self.selected_item()
+        QMessageBox.information(self.main, 'Периоды участия', participant_item.fio_periods())
 
 
 class ParticipantsTableModel(QAbstractTableModel):
@@ -44,18 +72,20 @@ class ParticipantsTableModel(QAbstractTableModel):
         self.layoutChanged.emit()
 
     def data(self, index, role=Qt.DisplayRole):
-        try:
-            value = self._data_[index.row()][index.column()]
-        except IndexError:
-            value = ''
         if role == Qt.DisplayRole:
-            if isinstance(value, bool):
-                if value:
-                    return 'ДА'
-                else:
-                    return 'НЕТ'
-            else:
-                return value
+            return self._data_[index.row()][index.column()]
+        elif role == Qt.UserRole:
+            # print(index.row(), index.column())
+            return self._data_[index.row()][5]
+
+        # try:
+        #     value = self._data_[index.row()][index.column()]
+        # except IndexError:
+        #     value = ''
+        # if role == Qt.DisplayRole:
+        #     return value
+        # elif role == Qt.UserRole:
+        #     return self._data_[index.row()][5]
 
     def rowCount(self, parent=QModelIndex()):
         return len(self._data_)

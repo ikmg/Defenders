@@ -103,6 +103,8 @@ class LinkedOrderFIO(BaseModel):
     picked_first_name = relationship('PickedFirstName', uselist=False, lazy=True)
     picked_middle_name = relationship('PickedMiddleName', uselist=False, lazy=True)
 
+    linked_order_persons = relationship('LinkedOrderPerson', back_populates='linked_order_fio', uselist=True, lazy=True)
+
     @hybrid_property
     def person_appeal(self):
         return '{} {} {}'.format(
@@ -133,7 +135,7 @@ class LinkedOrderPerson(BaseModel):
     picked_military_rank = relationship('PickedMilitaryRank', uselist=False, lazy=True)
     picked_personal_number = relationship('PickedPersonalNumber', uselist=False, lazy=True)
     picked_military_subject = relationship('PickedMilitarySubject', uselist=False, lazy=True)
-    linked_order_fio = relationship('LinkedOrderFIO', uselist=False, lazy=True)
+    linked_order_fio = relationship('LinkedOrderFIO', back_populates='linked_order_persons', uselist=False, lazy=True)
 
     linked_order_person_periods = relationship('LinkedOrderPersonPeriod', back_populates='linked_order_person', uselist=True, lazy=True)
 

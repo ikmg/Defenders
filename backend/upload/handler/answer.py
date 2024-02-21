@@ -2,6 +2,8 @@ from uuid import uuid4
 
 from database import ProvidedReport, ImportAnswer, InitAnswer
 from tools import DTConvert
+
+
 # from tools.dt import string_to_date, string_to_datetime, date_to_string, datetime_timezone
 
 
@@ -14,6 +16,7 @@ class AnswerHandler:
         self.init_data = init_data
 
     def check(self):
+        print('Проверка протокола идентификации...')
         if self.export and self.import_data and self.init_data:
             for row in self.init_data:
                 if row['init_date'].date() < self.import_data['date']:
@@ -22,18 +25,21 @@ class AnswerHandler:
                     ))
 
             del_list = []
+            print('Поиск персон в выгруженных записях...')
             for row in self.init_data:
+                print('строка #{}: <{} ({})>...'.format(row['number'], row['fio'], DTConvert(row['birthday']).dstring))
                 for record in self.export.provided_report_records:
                     tmp = record.keeped_report_record.linked_defender.linked_person
-                    if row['fio'] == tmp.person_appeal and DTConvert(row['birthday']).dstring == tmp.birthday:  # должна быть дата
+                    if row['fio'] == tmp.person_appeal and DTConvert(row['birthday']).dstring == DTConvert(tmp.birthday).dstring:  # должна быть дата
                         if record.id not in del_list:
                             row['provided_report_record_id'] = record.id
                             del_list.append(record.id)
+                            print('    id <{}>: <{} ({})>'.format(record.id, tmp.person_appeal, DTConvert(tmp.birthday).dstring))
                             break
 
             for row in self.init_data:
                 if not row['provided_report_record_id']:
-                    raise ValueError('персона {} ({} г.р.) не выгружалась'. format(row['fio'], DTConvert(row['birthday']).dstring))
+                    raise ValueError('персона {} ({} г.р.) не выгружалась'.format(row['fio'], DTConvert(row['birthday']).dstring))
 
             for record in self.export.provided_report_records:
                 is_found = False
@@ -42,9 +48,9 @@ class AnswerHandler:
                         is_found = True
                 if not is_found:
                     raise ValueError('персона {} ({} г.р.) отсутствует в протоколе идентификации'.format(
-                    record.keeped_report_record.linked_defender.linked_person.person_appeal,
-                    record.keeped_report_record.linked_defender.linked_person.birthday
-                ))
+                        record.keeped_report_record.linked_defender.linked_person.person_appeal,
+                        record.keeped_report_record.linked_defender.linked_person.birthday
+                    ))
         else:
             raise ValueError('произошло что-то непонятное')
 

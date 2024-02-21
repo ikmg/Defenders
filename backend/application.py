@@ -12,7 +12,7 @@ from tools import Directory, File, work_directory, DTConvert
 # В - ВИНТОВКА
 # Г - ГАРДА
 APP_VERSION = 'АЛЕБАРДА'
-APP_RELEASE = '13.02.2024'
+APP_RELEASE = '21.02.2024'
 
 
 class Root:
@@ -144,7 +144,7 @@ class Database:
         models = self.session.query(LinkedPerson).filter(like_op(LinkedPerson.birthday, '% 00:00:00')).all()
         if models:
             for model in models:
-                birthday = model.birthday.replace(' 00:00:00', '')
+                birthday = DTConvert(model.birthday).dstring
                 model_exists = self.session.query(LinkedPerson).filter(
                     LinkedPerson.picked_snils_id == model.picked_snils_id,
                     LinkedPerson.picked_last_name_id == model.picked_last_name_id,
