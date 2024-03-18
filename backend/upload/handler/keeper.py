@@ -3,10 +3,12 @@ from sqlalchemy.sql.operators import ilike_op
 from database import EskkMilitarySubject, KeepedOrderRecord, LinkedOrderPersonPeriod
 from database import PickedPersonalNumber, KeepedReportRecord, KeepedReport
 from database import LinkedOrderFIO, LinkedOrderPerson, KeepedOrder
+from database import OrdersStat
 from tools import DTConvert
 
 from .base import BaseKeeperFileHandler, BaseKeeperRecordHandler
 from .linker import LinkedDefenderHandler, LinkedOrderPersonPeriodHandler
+from backend.inspect import inspect_participants
 
 
 class KeepedReportHandler(BaseKeeperFileHandler):
@@ -141,6 +143,7 @@ class KeepedOrderHandler(BaseKeeperFileHandler):
         self.clear_orders()
         self.get_model()
         self.parsing()
+        self.inspect()
 
     def _find_(self):
         """Поиск импорта по хэш-сумме файла"""
@@ -202,6 +205,14 @@ class KeepedOrderHandler(BaseKeeperFileHandler):
                     print_log('обработано {} строк'.format(row_ind + 1))
         self.model.is_loaded = True
         self._session_.flush()
+
+    def inspect(self):
+        models = self._session_.query(LinkedOrderPerson).all()
+        participants = inspect_participants(self.import_id, models)
+        for item in participants:
+            model = OrdersStat(**item)
+            self._session_.add(model)
+            self._session_.flush()
 
 
 class KeepedOrderRecordHandler(BaseKeeperRecordHandler):

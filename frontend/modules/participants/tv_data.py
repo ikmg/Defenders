@@ -1,7 +1,7 @@
 from sqlalchemy import or_
-from sqlalchemy.sql.operators import ilike_op
 
-from database import LinkedDefender, LinkedPerson, PickedLastName, PickedFirstName, PickedMiddleName, PickedPersonalNumber, LinkedOrderPerson, LinkedOrderFIO, LinkedOrderPersonPeriod
+from database import PickedLastName, PickedFirstName, PickedMiddleName, PickedPersonalNumber, LinkedOrderPerson, LinkedOrderFIO, LinkedOrderPersonPeriod
+from tools import DTConvert
 
 
 class ParticipantData:
@@ -16,7 +16,7 @@ class ParticipantData:
 
     def get_participant(self, participant_id):
         self.model = self.app.database.session.query(LinkedOrderPerson)
-        self.model = self.model.join(LinkedOrderPersonPeriod)
+        self.model = self.model.join(LinkedOrderPersonPeriod, isouter=True)
         self.model = self.model.filter(LinkedOrderPerson.id == participant_id)
         self.model = self.model.scalar()
 
@@ -30,7 +30,12 @@ class ParticipantData:
         summary = 0
         for period in self.model.linked_order_person_periods:
             summary += period.days_count
-            result = '{}\nс {} по {} ({} дн.)'.format(result, period.date_begin, period.date_end, period.days_count)
+            result = '{}\nс {} по {} ({} дн.)'.format(
+                result,
+                DTConvert(period.date_begin).dstring,
+                DTConvert(period.date_end).dstring,
+                period.days_count
+            )
         result = '{}\n\nВсего: {} дн.'.format(result, summary)
         return result
 
@@ -48,7 +53,12 @@ class ParticipantData:
             )
             for period in person.linked_order_person_periods:
                 summary += period.days_count
-                result = '{}\nс {} по {} ({} дн.)'.format(result, period.date_begin, period.date_end, period.days_count)
+                result = '{}\nс {} по {} ({} дн.)'.format(
+                    result,
+                    DTConvert(period.date_begin).dstring,
+                    DTConvert(period.date_end).dstring,
+                    period.days_count
+                )
         result = '{}\n\nВсего: {} дн.'.format(result, summary)
         return result
 
@@ -57,8 +67,8 @@ class ParticipantData:
             self.model.picked_military_rank.value,
             self.model.linked_order_fio.person_appeal,
             self.model.picked_personal_number.value,
+            len(self.model.linked_order_person_periods),
             self.model.picked_military_subject.value,
-            # TODO
             self.model.id
         ]
 

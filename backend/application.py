@@ -1,6 +1,6 @@
 from sqlalchemy.sql.operators import like_op
 
-from database import Connection, DefenderParameter, LinkedPerson
+from database import Connection, vacuum_db, patch_db, DefenderParameter, LinkedPerson, KeepedReport
 from backend import dict_from_ini
 from backend import eskk_genders_upload, eskk_document_types_upload, eskk_military_ranks_upload, eskk_military_subjects_upload
 
@@ -139,7 +139,22 @@ class Database:
     def session(self):
         return self.connection.session
 
+    def vacuum(self):
+        vacuum_db(self.file.path)
+
+    def check_db(self):
+        try:
+            self.session.query(KeepedReport).first()
+            return True
+        except:
+            return False
+
     def patcher(self):
+        # патч структуры базы данных
+        if not self.check_db():
+            patch_db(self.file.path)
+            self.check_db()
+
         # патч наличия времени в дате рождения
         models = self.session.query(LinkedPerson).filter(like_op(LinkedPerson.birthday, '% 00:00:00')).all()
         if models:

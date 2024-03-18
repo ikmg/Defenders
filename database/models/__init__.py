@@ -22,6 +22,11 @@ from .keepers import KeepedReport, KeepedReportRecord
 # Провайдеры (provider) - таблицы поставщики информации для СФР России
 from .providers import ProvidedReport, ProvidedReportRecord
 
+# Ответы СФР
 from .answers import ImportAnswer, InitAnswer
 
+# Параметры приложения
 from .params import DefenderParameter
+
+# Статистика
+from .stat import OrdersStat

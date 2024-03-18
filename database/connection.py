@@ -1,7 +1,22 @@
+import sqlite3
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .models import Base
+
+
+def vacuum_db(path: str):
+    conn = sqlite3.connect(path)
+    conn.execute('VACUUM')
+    conn.close()
+
+
+def patch_db(path: str):
+    print('Обновление базы данных...')
+    conn = sqlite3.connect(path)
+    conn.execute('ALTER TABLE keeped_reports ADD COLUMN is_finished BOOLEAN NOT NULL DEFAULT FALSE')
+    conn.close()
 
 
 class Connection:
@@ -17,7 +32,7 @@ class Connection:
 
     def create_db(self):
         Base.metadata.create_all(self.engine)
-    #
+
     # def drop_db(self):
     #     print('<{}> полная очистка...'.format(self.db_uri))
     #     Base.metadata.drop_all(self.engine)

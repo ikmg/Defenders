@@ -58,8 +58,8 @@ class ParticipantsTableModel(QAbstractTableModel):
 
     def __init__(self, app, filter_text=None):
         super(QAbstractTableModel, self).__init__()
-        self.headers = ['number', 'rank', 'fio', 'personal_number', 'subject']
-        self.description = ['№', 'Звание', 'Фамилия, имя, отчество', 'Личный номер', 'Субъект']
+        self.headers = ['number', 'rank', 'fio', 'personal_number', 'periods', 'subject']
+        self.description = ['№', 'Звание', 'Фамилия, имя, отчество', 'Личный номер', 'Периоды', 'Субъект']
         self._data_ = ParticipantsListData(app).get_data(filter_text)  # отображаемые записи в таблице
 
     def sort(self, Ncol, order):
@@ -76,7 +76,7 @@ class ParticipantsTableModel(QAbstractTableModel):
             return self._data_[index.row()][index.column()]
         elif role == Qt.UserRole:
             # print(index.row(), index.column())
-            return self._data_[index.row()][5]
+            return self._data_[index.row()][6]
 
         # try:
         #     value = self._data_[index.row()][index.column()]

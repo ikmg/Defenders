@@ -88,9 +88,9 @@ class Responder:
                 init_file.copy(self.main.app.storage.answers.add_file('{}_init{}'.format(export_item.model.id, init_file.extension)).path)
                 self.main.app.database.session.commit()
                 self.cancel_answer()
-                self.main.exports_table_view.get_table_content()
                 QMessageBox.information(self.main, 'Загрузка ответа', 'Ответ для выгрузки {} успешно загружен'.format(export_item.model.id))
+                self.main.exports_table_view.get_table_content()
             except Exception as e:
                 self.main.app.database.session.rollback()
                 self.cancel_answer()
-                QMessageBox.critical(self.main, 'Загрузка ответа', 'Ошибка: {}'.format(e))
+                QMessageBox.critical(self.main, 'Загрузка ответа', 'Ошибки:{}'.format(e))

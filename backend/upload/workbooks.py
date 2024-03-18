@@ -66,6 +66,7 @@ class OrdersUploader:
             'workbook': self.workbook
         }
         KeepedOrderHandler(self.session, **keywords)
+        # TODO анализ загруженных данных об участниках
 
     @property
     def storage_filename(self):

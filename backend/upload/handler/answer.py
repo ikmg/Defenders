@@ -25,32 +25,57 @@ class AnswerHandler:
                     ))
 
             del_list = []
-            print('Поиск персон в выгруженных записях...')
+            print('Поиск записей из протокола идентификации в выгруженных записях...')
             for row in self.init_data:
-                print('строка #{}: <{} ({})>...'.format(row['number'], row['fio'], DTConvert(row['birthday']).dstring))
+                # print('строка #{}: <{} ({})>...'.format(row['number'], row['fio'], DTConvert(row['birthday']).dstring))
                 for record in self.export.provided_report_records:
                     tmp = record.keeped_report_record.linked_defender.linked_person
                     if row['fio'] == tmp.person_appeal and DTConvert(row['birthday']).dstring == DTConvert(tmp.birthday).dstring:  # должна быть дата
                         if record.id not in del_list:
                             row['provided_report_record_id'] = record.id
                             del_list.append(record.id)
-                            print('    id <{}>: <{} ({})>'.format(record.id, tmp.person_appeal, DTConvert(tmp.birthday).dstring))
+                            print('\tid <{}>: <{} ({})>'.format(record.id, tmp.person_appeal, DTConvert(tmp.birthday).dstring))
                             break
+                print('\033[{}mстрока #{}: <{} ({})> - {}\033[0m'.format(
+                    32 if row['provided_report_record_id'] else 31,
+                    row['number'],
+                    row['fio'],
+                    DTConvert(row['birthday']).dstring,
+                    'успешно' if row['provided_report_record_id'] else 'ошибка'
+                ))
 
+            export_errors_list = []
             for row in self.init_data:
                 if not row['provided_report_record_id']:
-                    raise ValueError('персона {} ({} г.р.) не выгружалась'.format(row['fio'], DTConvert(row['birthday']).dstring))
+                    export_errors_list.append('{} ({} г.р.)'.format(row['fio'], DTConvert(row['birthday']).dstring))
+                    # raise ValueError('персона {} ({} г.р.) не выгружалась'.format(row['fio'], DTConvert(row['birthday']).dstring))
 
+            init_errors_list = []
             for record in self.export.provided_report_records:
                 is_found = False
                 for row in self.init_data:
                     if record.id == row['provided_report_record_id']:
                         is_found = True
                 if not is_found:
-                    raise ValueError('персона {} ({} г.р.) отсутствует в протоколе идентификации'.format(
+                    init_errors_list.append('{} ({} г.р.)'.format(
                         record.keeped_report_record.linked_defender.linked_person.person_appeal,
                         record.keeped_report_record.linked_defender.linked_person.birthday
                     ))
+                    # raise ValueError('персона {} ({} г.р.) отсутствует в протоколе идентификации'.format(
+                    #     record.keeped_report_record.linked_defender.linked_person.person_appeal,
+                    #     record.keeped_report_record.linked_defender.linked_person.birthday
+                    # ))
+
+            if export_errors_list or init_errors_list:
+                error_message = ''
+                if export_errors_list:
+                    export_message = 'Не выгружались (присутствуют в протоколе):\n{}'.format('\n'.join(export_errors_list))
+                    error_message = '{}\n\n{}'.format(error_message, export_message)
+                if init_errors_list:
+                    init_message = 'Выгружались (отсутствуют в протоколе):\n{}'.format('\n'.join(init_errors_list))
+                    error_message = '{}\n\n{}'.format(error_message, init_message)
+                raise ValueError(error_message)
+
         else:
             raise ValueError('произошло что-то непонятное')
 

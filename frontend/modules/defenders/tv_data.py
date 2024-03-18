@@ -98,6 +98,6 @@ class DefendersListData:
                 defender = DefenderData(self.app)
                 defender.model = model
                 rows.append([str(index + 1).zfill(zero_count)] + defender.table_model_row())
-        if not rows:
-            rows.append(['---', 'Уточните критерии поиска'])
+        # if not rows:
+        #     rows.append(['---', 'Уточните критерии поиска'])
         return rows

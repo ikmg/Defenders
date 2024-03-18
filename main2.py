@@ -26,6 +26,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         QMainWindow.__init__(self)
+        # self.setWindowFlags(Qt.FramelessWindowHint)
+
         self.app = DefendersApp()
         # заставка
         pixmap = QPixmap("storage/images/loading.jpg")

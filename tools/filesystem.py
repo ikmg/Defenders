@@ -149,7 +149,7 @@ class File(Path):
         :return: None
         """
         if self.is_exists:
-            print('копирование файла <{}> байт:'.format(self.size))
+            print('копирование файла <{}> KB:'.format(self.size_kb))
             print('откуда: <{}>'.format(self.path))
             print('куда: <{}>\n'.format(destination))
             shutil.copyfile(self.path, destination)
@@ -206,5 +206,13 @@ class File(Path):
             return ''
 
     @property
-    def size(self):
+    def size_b(self):
         return os.path.getsize(self.path)
+
+    @property
+    def size_kb(self):
+        return round(os.path.getsize(self.path) / 1024, 2)
+
+    @property
+    def size_mb(self):
+        return round(self.size_kb / 1024, 2)

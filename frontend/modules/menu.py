@@ -9,7 +9,7 @@ class Menu:
         #
         self.main.action_exit.triggered.connect(self.main.close)
         #
-        self.main.menu_catologs.setIcon(QIcon(self.main.app.storage.images.folder_open.path))
+        self.main.menu_catalogs.setIcon(QIcon(self.main.app.storage.images.folder_open.path))
 
         self.main.action_storage_imports.setIcon(QIcon(self.main.app.storage.images.folder.path))
         self.main.action_storage_imports.triggered.connect(self.main.app.storage.imports.open)
@@ -22,6 +22,12 @@ class Menu:
 
         self.main.action_storage_orders.setIcon(QIcon(self.main.app.storage.images.folder.path))
         self.main.action_storage_orders.triggered.connect(self.main.app.storage.orders.open)
+
+        self.main.action_storage_stat.setIcon(QIcon(self.main.app.storage.images.folder.path))
+        self.main.action_storage_stat.triggered.connect(self.main.app.storage.stat.open)
+
+        self.main.action_storage.setIcon(QIcon(self.main.app.storage.images.folder.path))
+        self.main.action_storage.triggered.connect(self.main.app.storage.root.open)
         #
         self.main.menu_eskk.setIcon(QIcon(self.main.app.storage.images.refresh.path))
 
@@ -43,8 +49,21 @@ class Menu:
         self.main.action_clear_storage.setIcon(QIcon(self.main.app.storage.images.clear.path))
         self.main.action_clear_storage.triggered.connect(self.clear_storage)
 
+        self.main.action_vacuum_db.setIcon(QIcon(self.main.app.storage.images.result.path))
+        self.main.action_vacuum_db.triggered.connect(self.vacuum_db)
+
     def clear_storage(self):
+
+
         QMessageBox.information(self.main, 'Новая функция', 'находится в разработке')
+
+    def vacuum_db(self):
+        self.main.app.database.vacuum()
+        QMessageBox.information(
+            self.main,
+            'Сжатие базы данных',
+            'Завершено, текущий размер {} MB'.format(self.main.app.database.file.size_mb)
+        )
 
     def update_eskk_genders(self):
         try:
