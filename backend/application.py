@@ -12,7 +12,7 @@ from tools import Directory, File, work_directory, DTConvert
 # В - ВИНТОВКА
 # Г - ГАРДА
 APP_VERSION = 'АЛЕБАРДА'
-APP_RELEASE = '21.02.2024'
+APP_RELEASE = '21.03.2024'
 
 
 class Root:
@@ -130,7 +130,8 @@ class Database:
         self.uri = '{}:///{}'.format(dialect, self.file.path)
         self.connection = Connection(self.uri, echo_mode)
         self.connection.create_db()
-        self.patcher()
+        if not self.check_db():
+            self.patcher()
 
     def __repr__(self):
         return self.file.path
@@ -151,9 +152,8 @@ class Database:
 
     def patcher(self):
         # патч структуры базы данных
-        if not self.check_db():
-            patch_db(self.file.path)
-            self.check_db()
+        patch_db(self.file.path)
+        self.check_db()
 
         # патч наличия времени в дате рождения
         models = self.session.query(LinkedPerson).filter(like_op(LinkedPerson.birthday, '% 00:00:00')).all()

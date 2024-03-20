@@ -59,9 +59,7 @@ class Keys(Base):
         self._dict_['A_percent'] = self.percent('A')
         self._dict_['PR_percent'] = self.percent('PR')
         self._dict_['RS_percent'] = self.percent('RS')
-        self._dict_['other_percent'] = round(100 - (
-                self._dict_['A_percent'] - self._dict_['PR_percent'] - self._dict_['RS_percent']
-        ), 2)
+        self._dict_['other_percent'] = round(100 - self._dict_['A_percent'] - self._dict_['PR_percent'] - self._dict_['RS_percent'], 2)
         return {'Сводные сведения': self._dict_}
 
 
