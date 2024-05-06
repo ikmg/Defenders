@@ -4,6 +4,7 @@ from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PyQt5.QtGui import QBrush, QIcon, QGuiApplication
 from PyQt5.QtWidgets import QAction, QMessageBox
 
+from .dialog import DialogImport
 from .tv_data import ImportData, ImportsListData
 
 
@@ -12,8 +13,14 @@ class ImportsTableViewer:
     def __init__(self, main):
         self.main = main
         self.main.tableView_imports.setSortingEnabled(True)
+        self.main.tableView_imports.doubleClicked.connect(self.open_dialog_import)
         self.init_context_menu()
         self.get_table_content()
+
+    def open_dialog_import(self):
+        import_item = self.selected_import()
+        dialog = DialogImport(import_item)
+        result = dialog.exec()
 
     def init_context_menu(self):
         self.main.tableView_imports.setContextMenuPolicy(Qt.ActionsContextMenu)

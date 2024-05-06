@@ -11,8 +11,8 @@ from tools import Directory, File, work_directory, DTConvert
 # Б - БЕРДАНКА
 # В - ВИНТОВКА
 # Г - ГАРДА
-APP_VERSION = 'АЛЕБАРДА'
-APP_RELEASE = '21.03.2024'
+APP_VERSION = 'БЕРДАНКА'
+APP_RELEASE = '05.05.2024'
 
 
 class Root:

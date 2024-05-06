@@ -12,6 +12,13 @@ class StatTableViewer:
         self.main = main
         self.main.tableView_statistic_data.setSortingEnabled(False)
 
+        self.tmp_order = [
+            'import_count',
+            'import_subjects',
+            'participants_count',
+            'participants_errors'
+        ]
+
         self.stat_types = {
             'import_count': {'index': 0, 'name': 'Загруженные файлы (сводные сведения)', 'table_view': ImportCountTableView},
             'import_subjects': {'index': 1, 'name': 'Загруженные файлы (по субъектам)', 'table_view': ImportSubjectsTableView},
@@ -41,7 +48,7 @@ class StatTableViewer:
             destination.start()
 
     def init_combo_box_content(self):
-        for stat_type in self.stat_types:
+        for stat_type in self.tmp_order:
             self.main.comboBox_select_statistic.addItem(self.stat_types[stat_type]['name'])
             self.main.comboBox_select_statistic.setItemData(self.stat_types[stat_type]['index'], stat_type, Qt.UserRole)
         self.main.comboBox_select_statistic.setEditable(False)

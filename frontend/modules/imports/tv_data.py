@@ -74,6 +74,22 @@ class ImportData:
             self.model.is_finished
         ]
 
+    def dialog_table_model_rows(self):
+        result = []
+        for record in self.model.keeped_report_records:
+            row = [
+                record.file_row_num,
+                record.linked_defender.linked_person.person_appeal,
+                record.linked_defender.picked_personal_number.value,
+                # record.linked_defender.picked_military_subject.value,
+                record.critical_messages,
+                record.warning_messages,
+                record.provided_report_record.provided_report_id if record.provided_report_record else 'Нет',
+                record.provided_report_record.answer_init.comment if record.provided_report_record and record.provided_report_record.answer_init else 'Нет',
+            ]
+            result.append(row)
+        return result
+
     def create_import_protocol(self):
         subject_dir = self.app.storage.imports.add_dir(self.model.eskk_military_subject_id)
         destination = subject_dir.add_file('{}_import.xlsx'.format(self.model.id))
