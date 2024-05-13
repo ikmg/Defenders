@@ -41,3 +41,4 @@ class ProvidedReportHandler:
             self.session.add(model_row)
             self.session.flush()
         self.session.commit()
+        return model_export

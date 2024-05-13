@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMessageBox
 
-from backend import ProvidedReportHandler
+from backend import ProvidedReportHandler, export_data
+from frontend.modules.exports.tv_data import ExportData
 
 
 class Exporter:
@@ -21,7 +22,12 @@ class Exporter:
             msg.setDefaultButton(button_no)
             msg.exec_()
             if msg.clickedButton() == button_yes:
-                provider.make_export()
+                model = provider.make_export()
+
+                export_data = ExportData(self.main.app)
+                export_data.get_export(model.id)
+                export_data.create_export_file()
+
                 self.main.exports_table_view.get_table_content()
                 self.main.imports_table_view.get_table_content()
                 QMessageBox.information(self.main, 'Создание выгрузки', 'Выгружено {} записей'.format(provider.count))
