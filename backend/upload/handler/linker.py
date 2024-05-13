@@ -232,6 +232,14 @@ class LinkedDocumentVBDHandler(BaseHandler):
     def __init__(self, session, **keywords):
         super().__init__(session, LinkedDocumentVBD)
         self.picked_serial = PickedDocumentSerialHandler(session, keywords['serial'])
+        # hot fix with VBD serial
+        # ------------------------------
+        self.picked_serial.reg_exp = '^[А-Я]{2}(\-I|){0,1}$'
+        self.picked_serial.critical_messages = []
+        self.picked_serial.warning_messages = []
+        self.picked_serial.check()
+        self.picked_serial.get_model()
+        # ------------------------------
         self.picked_number = PickedDocumentNumberHandler(session, keywords['number'])
         self.picked_organization = PickedDocumentOrganizationHandler(session, keywords['organization'])
         self.date = clear_string(keywords['date'])
@@ -283,7 +291,6 @@ class LinkedDocumentVBDHandler(BaseHandler):
             self._session_.flush()
 
     def check(self):
-        allow_serials = ['ВВ', 'БД', 'БД-I']
         # проверка даты документа
         if self.date:
             if self.document_date:
@@ -296,13 +303,14 @@ class LinkedDocumentVBDHandler(BaseHandler):
         else:
             self.critical_messages.append('обязательное поле <Дата УВБД> не содержит значения')
         # проверка серии
-        if not re_full_match('^[А-Я]{2}(\-I|){0,1}$', self.picked_serial.value):
-            self.critical_messages.append('<Серия УВБД> не соответствует формату ={}'.format(self.picked_serial.value))
+        # if not re_full_match('^[А-Я]{2}(\-I|){0,1}$', self.picked_serial.value):
+        #     self.critical_messages.append('<Серия УВБД> не соответствует формату ={}'.format(self.picked_serial.value))
         # проверка номера
         if not re_full_match('\d{6,7}', self.picked_number.value):
             self.critical_messages.append('<Номер УВБД> не соответствует формату ={}'.format(self.picked_number.value))
         # проверка номеров по серии
-        if self.picked_serial.value in allow_serials:
+        rg_allow_serials = ['ВВ', 'БД', 'БД-I']
+        if self.picked_serial.value in rg_allow_serials:
             if not re_full_match('\d{6}', self.picked_number.value):
                 self.critical_messages.append('<Номер УВБД> для серии {} не соответствует формату ={}'.format(self.picked_serial.value, self.picked_number.value))
         # сбор всех ошибок
