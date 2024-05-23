@@ -89,38 +89,6 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_files" stretch="1,2,2,2">
-       <item>
-        <widget class="QLabel" name="label_files">
-         <property name="text">
-          <string>Файлы</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_received_file">
-         <property name="text">
-          <string>Поступивший файл</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_protocol_import">
-         <property name="text">
-          <string>Протокол импорта</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_protocol_identify">
-         <property name="text">
-          <string>Протокол идентификации</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_stat" stretch="1,6">
        <item>
         <widget class="QLabel" name="label_stat">
@@ -157,9 +125,78 @@
       </layout>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_files" stretch="1,2,2,2">
+       <item>
+        <widget class="QLabel" name="label_files">
+         <property name="text">
+          <string>Файлы</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_received_file">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Поступивший файл</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_protocol_import">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Протокол импорта</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_protocol_init">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Протокол идентификации</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_rows">
        <item>
-        <widget class="QTableView" name="tableView_rows"/>
+        <widget class="QTableView" name="tableView_rows">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
+         </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>50</number>
+         </attribute>
+         <attribute name="verticalHeaderMinimumSectionSize">
+          <number>63</number>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>90</number>
+         </attribute>
+        </widget>
        </item>
       </layout>
      </item>
@@ -174,6 +211,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_import_delete">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="text">
           <string>Удалить загрузку</string>
          </property>
@@ -181,6 +224,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_result_file">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="text">
           <string>Результирующий файл</string>
          </property>
@@ -188,6 +237,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_import_finish">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="text">
           <string>Завершить работу</string>
          </property>

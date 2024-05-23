@@ -35,6 +35,10 @@ class ImportData:
             self.record_count.answered
         )
 
+    def change_contacts(self, new_value: str):
+        self.model.contact_info = new_value
+        self.session.commit()
+
     def get_import(self, import_id):
         self.model = self.session.query(KeepedReport)
         self.model = self.model.filter(KeepedReport.id == import_id)

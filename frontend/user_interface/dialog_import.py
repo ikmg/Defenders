@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dialog_importdVNHbd.ui'
+## Form generated from reading UI file 'dialog_importCgkgVL.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -94,35 +94,6 @@ class Ui_Dialog_import(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_contacts)
 
-        self.horizontalLayout_files = QHBoxLayout()
-        self.horizontalLayout_files.setObjectName(u"horizontalLayout_files")
-        self.label_files = QLabel(Dialog_import)
-        self.label_files.setObjectName(u"label_files")
-
-        self.horizontalLayout_files.addWidget(self.label_files)
-
-        self.pushButton_received_file = QPushButton(Dialog_import)
-        self.pushButton_received_file.setObjectName(u"pushButton_received_file")
-
-        self.horizontalLayout_files.addWidget(self.pushButton_received_file)
-
-        self.pushButton_protocol_import = QPushButton(Dialog_import)
-        self.pushButton_protocol_import.setObjectName(u"pushButton_protocol_import")
-
-        self.horizontalLayout_files.addWidget(self.pushButton_protocol_import)
-
-        self.pushButton_protocol_identify = QPushButton(Dialog_import)
-        self.pushButton_protocol_identify.setObjectName(u"pushButton_protocol_identify")
-
-        self.horizontalLayout_files.addWidget(self.pushButton_protocol_identify)
-
-        self.horizontalLayout_files.setStretch(0, 1)
-        self.horizontalLayout_files.setStretch(1, 2)
-        self.horizontalLayout_files.setStretch(2, 2)
-        self.horizontalLayout_files.setStretch(3, 2)
-
-        self.verticalLayout.addLayout(self.horizontalLayout_files)
-
         self.horizontalLayout_stat = QHBoxLayout()
         self.horizontalLayout_stat.setObjectName(u"horizontalLayout_stat")
         self.label_stat = QLabel(Dialog_import)
@@ -159,10 +130,48 @@ class Ui_Dialog_import(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_status)
 
+        self.horizontalLayout_files = QHBoxLayout()
+        self.horizontalLayout_files.setObjectName(u"horizontalLayout_files")
+        self.label_files = QLabel(Dialog_import)
+        self.label_files.setObjectName(u"label_files")
+
+        self.horizontalLayout_files.addWidget(self.label_files)
+
+        self.pushButton_received_file = QPushButton(Dialog_import)
+        self.pushButton_received_file.setObjectName(u"pushButton_received_file")
+        self.pushButton_received_file.setMinimumSize(QSize(0, 40))
+
+        self.horizontalLayout_files.addWidget(self.pushButton_received_file)
+
+        self.pushButton_protocol_import = QPushButton(Dialog_import)
+        self.pushButton_protocol_import.setObjectName(u"pushButton_protocol_import")
+        self.pushButton_protocol_import.setMinimumSize(QSize(0, 40))
+
+        self.horizontalLayout_files.addWidget(self.pushButton_protocol_import)
+
+        self.pushButton_protocol_init = QPushButton(Dialog_import)
+        self.pushButton_protocol_init.setObjectName(u"pushButton_protocol_init")
+        self.pushButton_protocol_init.setMinimumSize(QSize(0, 40))
+
+        self.horizontalLayout_files.addWidget(self.pushButton_protocol_init)
+
+        self.horizontalLayout_files.setStretch(0, 1)
+        self.horizontalLayout_files.setStretch(1, 2)
+        self.horizontalLayout_files.setStretch(2, 2)
+        self.horizontalLayout_files.setStretch(3, 2)
+
+        self.verticalLayout.addLayout(self.horizontalLayout_files)
+
         self.horizontalLayout_rows = QHBoxLayout()
         self.horizontalLayout_rows.setObjectName(u"horizontalLayout_rows")
         self.tableView_rows = QTableView(Dialog_import)
         self.tableView_rows.setObjectName(u"tableView_rows")
+        self.tableView_rows.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tableView_rows.setSortingEnabled(True)
+        self.tableView_rows.horizontalHeader().setMinimumSectionSize(50)
+        self.tableView_rows.horizontalHeader().setDefaultSectionSize(50)
+        self.tableView_rows.verticalHeader().setMinimumSectionSize(63)
+        self.tableView_rows.verticalHeader().setDefaultSectionSize(90)
 
         self.horizontalLayout_rows.addWidget(self.tableView_rows)
 
@@ -178,16 +187,19 @@ class Ui_Dialog_import(object):
 
         self.pushButton_import_delete = QPushButton(Dialog_import)
         self.pushButton_import_delete.setObjectName(u"pushButton_import_delete")
+        self.pushButton_import_delete.setMinimumSize(QSize(0, 40))
 
         self.horizontalLayout_operations.addWidget(self.pushButton_import_delete)
 
         self.pushButton_result_file = QPushButton(Dialog_import)
         self.pushButton_result_file.setObjectName(u"pushButton_result_file")
+        self.pushButton_result_file.setMinimumSize(QSize(0, 40))
 
         self.horizontalLayout_operations.addWidget(self.pushButton_result_file)
 
         self.pushButton_import_finish = QPushButton(Dialog_import)
         self.pushButton_import_finish.setObjectName(u"pushButton_import_finish")
+        self.pushButton_import_finish.setMinimumSize(QSize(0, 40))
 
         self.horizontalLayout_operations.addWidget(self.pushButton_import_finish)
 
@@ -213,12 +225,12 @@ class Ui_Dialog_import(object):
         self.label_reg_num.setText(QCoreApplication.translate("Dialog_import", u"\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u043d\u043e\u043c\u0435\u0440", None))
         self.label_subject.setText(QCoreApplication.translate("Dialog_import", u"\u0421\u0443\u0431\u044a\u0435\u043a\u0442 \u0432\u043e\u0439\u0441\u043a", None))
         self.label_contacts.setText(QCoreApplication.translate("Dialog_import", u"\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u0435\u043b\u044f", None))
+        self.label_stat.setText(QCoreApplication.translate("Dialog_import", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
+        self.label_status.setText(QCoreApplication.translate("Dialog_import", u"\u0421\u0442\u0430\u0442\u0443\u0441 \u0440\u0430\u0431\u043e\u0442\u044b \u0441 \u0444\u0430\u0439\u043b\u043e\u043c", None))
         self.label_files.setText(QCoreApplication.translate("Dialog_import", u"\u0424\u0430\u0439\u043b\u044b", None))
         self.pushButton_received_file.setText(QCoreApplication.translate("Dialog_import", u"\u041f\u043e\u0441\u0442\u0443\u043f\u0438\u0432\u0448\u0438\u0439 \u0444\u0430\u0439\u043b", None))
         self.pushButton_protocol_import.setText(QCoreApplication.translate("Dialog_import", u"\u041f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u0438\u043c\u043f\u043e\u0440\u0442\u0430", None))
-        self.pushButton_protocol_identify.setText(QCoreApplication.translate("Dialog_import", u"\u041f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u0438\u0434\u0435\u043d\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u0438", None))
-        self.label_stat.setText(QCoreApplication.translate("Dialog_import", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
-        self.label_status.setText(QCoreApplication.translate("Dialog_import", u"\u0421\u0442\u0430\u0442\u0443\u0441 \u0440\u0430\u0431\u043e\u0442\u044b \u0441 \u0444\u0430\u0439\u043b\u043e\u043c", None))
+        self.pushButton_protocol_init.setText(QCoreApplication.translate("Dialog_import", u"\u041f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u0438\u0434\u0435\u043d\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u0438", None))
         self.label_operations.setText(QCoreApplication.translate("Dialog_import", u"\u041e\u043f\u0435\u0440\u0430\u0446\u0438\u0438", None))
         self.pushButton_import_delete.setText(QCoreApplication.translate("Dialog_import", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0443", None))
         self.pushButton_result_file.setText(QCoreApplication.translate("Dialog_import", u"\u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0438\u0440\u0443\u044e\u0449\u0438\u0439 \u0444\u0430\u0439\u043b", None))
