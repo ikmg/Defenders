@@ -75,7 +75,7 @@ class OrdersUploader:
 
 class AnswerUploader:
 
-    def __init__(self, session, export_id, import_file_path, init_file_path):
+    def __init__(self, session, import_file_path, init_file_path):
         self.session = session
 
         self.workbook_import = AnswerImportWorkbook(import_file_path)
@@ -86,6 +86,12 @@ class AnswerUploader:
         self.workbook_init.load()
         self.workbook_init.select_worksheet(self.workbook_init.worksheets_list[0])
 
+    def save(self, export_id):
         answer = AnswerHandler(self.session, export_id, self.workbook_import.worksheet_data(), self.workbook_init.worksheet_data())
         answer.check()
         answer.save()
+
+    def update(self, export_id):
+        answer = AnswerHandler(self.session, export_id, self.workbook_import.worksheet_data(), self.workbook_init.worksheet_data())
+        answer.check()
+        answer.update()

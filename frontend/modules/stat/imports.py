@@ -152,7 +152,7 @@ class ImportCountTableView(TableView):
             for record in model.keeped_report_records:
                 # записей на отправку
                 if record.critical_messages == '' and record.is_find_in_orders:
-                    correction_on_send +=1
+                    correction_on_send += 1
                 # записей отправлено
                 if record.provided_report_record:
                     correction_sended += 1
@@ -185,7 +185,7 @@ class ImportCountTableView(TableView):
         self._data_.append([result['subjects']['name'], len(result['subjects']['unique'])])
         self._data_.append(['Персоны', ''])
         self._data_.append([result['persons']['name'], result['persons']['count']])
-        self._data_.append([result['on_send']['name'], result['on_send']['count']])
+        # self._data_.append([result['on_send']['name'], result['on_send']['count']])
         self._data_.append([result['sended']['name'], result['sended']['count']])
         self._data_.append([result['answered']['name'], result['answered']['count']])
         self._data_.append(['Справка', ''])

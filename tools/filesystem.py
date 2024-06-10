@@ -120,6 +120,22 @@ class Directory(Path):
         else:
             raise FileNotFoundError('директория не найдена {}'.format(self.path))
 
+    def files_list(self):
+        result = []
+        children = [self.add_file(i) for i in sorted(os.listdir(self.path))]
+        for file in children:
+            if os.path.isfile(file.path):
+                result.append(file.path)
+        return result
+
+    def dirs_list(self):
+        result = []
+        children = [self.add_file(i) for i in sorted(os.listdir(self.path))]
+        for file in children:
+            if os.path.isdir(file.path):
+                result.append(file.path)
+        return result
+
 
 class File(Path):
     """

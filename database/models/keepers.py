@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Boolean, String, Integer, ForeignKey
+from sqlalchemy import Column, Boolean, String, Integer, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 
 from . import BaseModel
@@ -79,6 +79,9 @@ class KeepedReportRecord(KeeperRecordModel):
     keeped_report_id = Column(String, ForeignKey('keeped_reports.id', ondelete='CASCADE'), nullable=False, doc='Идентификатор отчета')
     linked_defender_id = Column(String, ForeignKey('linked_defenders.id', ondelete='CASCADE'), nullable=False, doc='Строка отчета с защитником Отечества')
     is_find_in_orders = Column(Boolean, nullable=False, default=False, doc='Защитник Отечества найден (идентифицирован) в приказах ОШУ Росгвардии')
+
+    warning_colors = Column(JSON, nullable=True)
+    critical_colors = Column(JSON, nullable=True)
 
     keeped_report = relationship('KeepedReport', uselist=False, lazy=True, back_populates='keeped_report_records')
     linked_defender = relationship('LinkedDefender', uselist=False, lazy=True)

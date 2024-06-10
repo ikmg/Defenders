@@ -39,6 +39,12 @@ class ExportsTableViewer:
         load_answer.triggered.connect(self.load_answer)
         self.main.tableView_exports.addAction(load_answer)
 
+        update_answer = QAction(self.main.tableView_exports)
+        update_answer.setText('Обновить ответ')
+        update_answer.setIcon(QIcon(self.main.app.storage.images.refresh.path))
+        update_answer.triggered.connect(self.update_answer)
+        self.main.tableView_exports.addAction(update_answer)
+
         open_import_protocol = QAction(self.main.tableView_exports)
         open_import_protocol.setText('Протокол импорта')
         open_import_protocol.setIcon(QIcon(self.main.app.storage.images.orders.path))
@@ -98,14 +104,26 @@ class ExportsTableViewer:
             message.append('{}. {} {} {} ({})'.format(index + 1, row[0], row[1], row[2], row[4]))
         QMessageBox.information(self.main, export_item.model.id, '\n'.join(message))
 
+    def respondent_fields_enabled(self, export_item):
+        self.main.tableView_exports.setEnabled(False)
+        self.main.lineEdit_export_id.setText(export_item.model.id)
+        self.main.respondent.set_fields_enabled()
+
     def load_answer(self):
         export_item = self.selected_export()
         if export_item.model.answer_import:
             QMessageBox.information(self.main, 'Загрузка ответа', 'Для выгрузки {} ответ был загружен ранее'.format(export_item.model.id))
         else:
-            self.main.tableView_exports.setEnabled(False)
-            self.main.lineEdit_export_id.setText(export_item.model.id)
-            self.main.respondent.set_fields_enabled()
+            self.respondent_fields_enabled(export_item)
+            self.main.respondent.set_load_mode()
+
+    def update_answer(self):
+        export_item = self.selected_export()
+        if not export_item.model.answer_import:
+            QMessageBox.information(self.main, 'Обновление ответа', 'Для выгрузки {} ответ не загружался'.format(export_item.model.id))
+        else:
+            self.respondent_fields_enabled(export_item)
+            self.main.respondent.set_update_mode()
 
 
 class ExportsTableModel(QAbstractTableModel):

@@ -1,3 +1,5 @@
+import json
+
 from sqlalchemy.sql.operators import ilike_op
 
 from database import EskkMilitarySubject, KeepedOrderRecord, LinkedOrderPersonPeriod
@@ -122,6 +124,8 @@ class KeepedReportRecordHandler(BaseKeeperRecordHandler):
         self.model.is_find_in_orders = self.is_find_in_orders
         self.model.warning_messages = self.warning
         self.model.critical_messages = self.critical
+        self.model.warning_colors = json.dumps(self.linked_defender.warning_colors)
+        self.model.critical_colors = json.dumps(self.linked_defender.critical_colors)
 
         self._session_.add(self.model)
         self._session_.flush()

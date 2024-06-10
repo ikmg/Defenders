@@ -20,6 +20,9 @@ class BaseHandler(ABC):
         self.warning_messages = []  # список предупреждений
         self.critical_messages = []  # список критических ошибок
 
+        self.warning_colors = {}
+        self.critical_colors = {}
+
     @abstractmethod
     def _find_(self):
         """

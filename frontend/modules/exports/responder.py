@@ -20,9 +20,15 @@ class Responder:
         self.main.pushButton_select_answer_init.pressed.connect(self.select_answer_init_file_dialog)
 
         self.main.pushButton_load_answers.setIcon(QIcon(self.main.app.storage.images.load.path))
-        self.main.pushButton_load_answers.pressed.connect(self.load_answers)
+        # self.main.pushButton_load_answers.pressed.connect(self.load_answers)
 
         self.set_fields_enabled()
+
+    def set_load_mode(self):
+        self.main.pushButton_load_answers.pressed.connect(self.load_answers)
+
+    def set_update_mode(self):
+        self.main.pushButton_load_answers.pressed.connect(self.update_answers)
 
     def cancel_answer(self):
         self.main.lineEdit_export_id.clear()
@@ -77,13 +83,18 @@ class Responder:
             if self.main.lineEdit_answer_import_filename.text() and self.main.lineEdit_answer_init_filename.text():
                 self.main.pushButton_load_answers.setEnabled(True)
 
-    def load_answers(self):
+    def upload(self, is_update_mode: bool):
         export_item = self.main.exports_table_view.selected_export()
         import_file = File(self.main.lineEdit_answer_import_filename.text())
         init_file = File(self.main.lineEdit_answer_init_filename.text())
         if import_file.is_exists and init_file.is_exists:
             try:
-                AnswerUploader(self.main.app.database.session, export_item.model.id, import_file.path, init_file.path)
+                uploader = AnswerUploader(self.main.app.database.session, import_file.path, init_file.path)
+                if not is_update_mode:
+                    uploader.save(export_item.model.id)
+                else:
+                    uploader.update(export_item.model.id)
+
                 import_file.copy(self.main.app.storage.answers.add_file('{}_import{}'.format(export_item.model.id, import_file.extension)).path)
                 init_file.copy(self.main.app.storage.answers.add_file('{}_init{}'.format(export_item.model.id, init_file.extension)).path)
                 self.main.app.database.session.commit()
@@ -94,3 +105,9 @@ class Responder:
                 self.main.app.database.session.rollback()
                 self.cancel_answer()
                 QMessageBox.critical(self.main, 'Загрузка ответа', 'Ошибки:{}'.format(e))
+
+    def load_answers(self):
+        self.upload(is_update_mode=False)
+
+    def update_answers(self):
+        self.upload(is_update_mode=True)

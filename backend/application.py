@@ -1,8 +1,9 @@
 from sqlalchemy.sql.operators import like_op
 
-from database import Connection, vacuum_db, patch_db, DefenderParameter, LinkedPerson, KeepedReport
+from database import Connection, vacuum_db, patch_db, DefenderParameter, LinkedPerson, KeepedReport, KeepedOrder, ProvidedReport, KeepedReportRecord
 from backend import dict_from_ini
 from backend import eskk_genders_upload, eskk_document_types_upload, eskk_military_ranks_upload, eskk_military_subjects_upload
+from database.connection import patch2_db
 
 from tools import Directory, File, work_directory, DTConvert
 
@@ -12,7 +13,7 @@ from tools import Directory, File, work_directory, DTConvert
 # В - ВИНТОВКА
 # Г - ГАРДА
 APP_VERSION = 'БЕРДАНКА'
-APP_RELEASE = '05.05.2024'
+APP_RELEASE = '09.06.2024'
 
 
 class Root:
@@ -132,6 +133,8 @@ class Database:
         self.connection.create_db()
         if not self.check_db():
             self.patcher()
+        if not self.check2_db():
+            self.patcher2()
 
     def __repr__(self):
         return self.file.path
@@ -146,6 +149,13 @@ class Database:
     def check_db(self):
         try:
             self.session.query(KeepedReport).first()
+            return True
+        except:
+            return False
+
+    def check2_db(self):
+        try:
+            self.session.query(KeepedReportRecord).first()
             return True
         except:
             return False
@@ -172,6 +182,11 @@ class Database:
                 else:
                     model.birthday = birthday
         self.session.commit()
+
+    def patcher2(self):
+        # патч структуры базы данных
+        patch2_db(self.file.path)
+        self.check2_db()
 
 
 class Storage(Root):

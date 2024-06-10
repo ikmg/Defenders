@@ -1,5 +1,9 @@
+import sys
+
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox
+
+from backend import StorageInspector
 
 
 class Menu:
@@ -53,8 +57,11 @@ class Menu:
         self.main.action_vacuum_db.triggered.connect(self.vacuum_db)
 
     def clear_storage(self):
-
-
+        with open('storage_inspector.txt', 'w') as sys.stdout:
+            inspector = StorageInspector(self.main.app)
+            inspector.compare()
+            inspector.clear()
+        sys.stdout = sys.__stdout__
         QMessageBox.information(self.main, 'Новая функция', 'находится в разработке')
 
     def vacuum_db(self):

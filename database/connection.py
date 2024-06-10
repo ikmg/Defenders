@@ -15,7 +15,17 @@ def vacuum_db(path: str):
 def patch_db(path: str):
     print('Обновление базы данных...')
     conn = sqlite3.connect(path)
-    conn.execute('ALTER TABLE keeped_reports ADD COLUMN is_finished BOOLEAN NOT NULL DEFAULT FALSE')
+    conn.execute('ALTER TABLE keeped_reports ADD COLUMN IF NOT EXISTS is_finished BOOLEAN NOT NULL DEFAULT FALSE')
+    # conn.execute('ALTER TABLE keeped_report_records ADD COLUMN warning_colors JSON')
+    # conn.execute('ALTER TABLE keeped_report_records ADD COLUMN critical_colors JSON')
+    conn.close()
+
+
+def patch2_db(path: str):
+    print('Обновление базы данных...')
+    conn = sqlite3.connect(path)
+    conn.execute('ALTER TABLE keeped_report_records ADD COLUMN warning_colors JSON')
+    conn.execute('ALTER TABLE keeped_report_records ADD COLUMN critical_colors JSON')
     conn.close()
 
 

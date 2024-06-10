@@ -106,3 +106,22 @@ class AnswerHandler:
                 answer_init.comment = row['comment']
                 self.session.add(answer_init)
                 self.session.flush()
+
+    def update(self):
+        answer_import = self.session.query(ImportAnswer).filter(ImportAnswer.provided_report_id == self.export.id).scalar()
+        answer_import.created_utc = DTConvert().datetime  # должно быть дата/время с часовым поясом
+        answer_import.import_date = self.import_data['date']
+        answer_import.reg_number = self.import_data['reg_num']
+        answer_import.user = self.import_data['user']
+        answer_import.result = self.import_data['result']
+        self.session.flush()
+
+        for row in self.init_data:
+            answer_init = self.session.query(InitAnswer).filter(InitAnswer.provided_report_record_id == row['provided_report_record_id']).scalar()
+            answer_init.created_utc = DTConvert().datetime  # должно быть дата/время с часовым поясом
+            # answer_init.provided_report_record_id = row['provided_report_record_id']
+            answer_init.init_date = row['init_date']
+            answer_init.number = row['number']
+            answer_init.status = row['status']
+            answer_init.comment = row['comment']
+            self.session.flush()

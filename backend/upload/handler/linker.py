@@ -26,8 +26,32 @@ class LinkedPersonHandler(BaseHandler):
         self.picked_middle_name = PickedMiddleNameHandler(session, keywords['middle_name'])
         self.eskk_gender_id = clear_string(keywords['eskk_gender_id'])
         self.birthday = clear_string(keywords['birthday'])
+        self.colors()
         self.get_model()
         self.check()
+
+    def colors(self):
+        self.warning_colors = {x: False for x in range(1, 6)}
+        self.warning_colors[7] = False
+        if self.picked_last_name.warning_messages:
+            self.warning_colors[1] = True
+        if self.picked_first_name.warning_messages:
+            self.warning_colors[2] = True
+        if self.picked_middle_name.warning_messages:
+            self.warning_colors[3] = True
+        if self.picked_snils.warning_messages:
+            self.warning_colors[7] = True
+
+        self.critical_colors = {x: False for x in range(1, 6)}
+        self.critical_colors[7] = False
+        if self.picked_last_name.critical_messages:
+            self.critical_colors[1] = True
+        if self.picked_first_name.critical_messages:
+            self.critical_colors[2] = True
+        if self.picked_middle_name.critical_messages:
+            self.critical_colors[3] = True
+        if self.picked_snils.critical_messages:
+            self.critical_colors[7] = True
 
     @property
     def birthday_date(self):
@@ -42,6 +66,7 @@ class LinkedPersonHandler(BaseHandler):
         else:
             self.critical_messages.append('<Пол> содержит недопустимое значение ={}'.format(self.eskk_gender_id))
             self.eskk_gender_id = '0'
+            self.critical_colors[4] = True
             return False
 
     def age(self, years):
@@ -106,10 +131,13 @@ class LinkedPersonHandler(BaseHandler):
             if self.birthday_date:
                 if self.age(18) > DTConvert().date:
                     self.critical_messages.append('<Персона> должна быть старше 18 лет ={}'.format(self.birthday))
+                    self.critical_colors[5] = True
             else:
                 self.critical_messages.append('<Дата рождения> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.birthday))
+                self.critical_colors[5] = True
         else:
             self.critical_messages.append('обязательное поле <Дата рождения> не содержит значения')
+            self.critical_colors[5] = True
         # проверка повторной идентификации СНИЛС
         if self.picked_snils.is_already_exists and self.picked_snils.value:
             persons = []
@@ -124,9 +152,12 @@ class LinkedPersonHandler(BaseHandler):
                     ))
             if persons:
                 self.warning_messages.append('<СНИЛС> уже идентифицировался ({})'.format(', '.join(persons)))
+                self.warning_colors[7] = True
         # проверка повторной идентификации персоны
         if self.is_already_exists:
             self.warning_messages.append('<Персона> уже идентифицировалась {}'.format(DTConvert(self.created_utc).dtstring))  # должно быть дата/время
+            # self.warning_colors = {x: True for x in range(1, 6)}
+            # self.warning_colors[7] = True
         # сбор всех ошибок
         self.warning_messages = (self.warning_messages + self.picked_snils.warning_messages + self.picked_last_name.warning_messages +
                                  self.picked_first_name.warning_messages + self.picked_middle_name.warning_messages)
@@ -143,8 +174,26 @@ class LinkedDocumentHandler(BaseHandler):
         self.picked_organization = PickedDocumentOrganizationHandler(session, keywords['organization'])
         self.eskk_document_type_id = clear_string(keywords['eskk_document_type_id'])
         self.date = clear_string(keywords['date'])
+        self.colors()
         self.get_model()
         self.check()
+
+    def colors(self):
+        self.warning_colors = {x: False for x in range(8, 13)}
+        if self.picked_serial.warning_messages:
+            self.warning_colors[9] = True
+        if self.picked_number.warning_messages:
+            self.warning_colors[10] = True
+        if self.picked_organization.warning_messages:
+            self.warning_colors[12] = True
+
+        self.critical_colors = {x: False for x in range(8, 13)}
+        if self.picked_serial.critical_messages:
+            self.critical_colors[9] = True
+        if self.picked_number.critical_messages:
+            self.critical_colors[10] = True
+        if self.picked_organization.critical_messages:
+            self.critical_colors[12] = True
 
     @property
     def document_date(self):
@@ -159,6 +208,7 @@ class LinkedDocumentHandler(BaseHandler):
         else:
             self.critical_messages.append('обязательное поле <Тип документа> содержит недопустимое значение ={}'.format(self.eskk_document_type_id))
             self.eskk_document_type_id = '0'
+            self.critical_colors[8] = True
             return False
 
     def _find_(self):
@@ -174,8 +224,10 @@ class LinkedDocumentHandler(BaseHandler):
             # сверка организации и даты выдачи
             if model.picked_organization_id != self.picked_organization.id:
                 self.warning_messages.append('<Документ> идентифицировался ранее с выдавшим органом {}'.format(model.picked_organization.value))
+                self.warning_colors[12] = True
             if model.date != self.date:
                 self.warning_messages.append('<Документ> идентифицировался ранее с датой выдачи {}'.format(model.date))
+                self.warning_colors[11] = True
 
     def get_model(self):
         self.is_document_type_exists()
@@ -210,16 +262,21 @@ class LinkedDocumentHandler(BaseHandler):
             if self.document_date:
                 if self.document_date > DTConvert().date:
                     self.critical_messages.append('<Дата документа> содержит значение старше текущей даты ={}'.format(self.date))
+                    self.critical_colors[11] = True
             else:
                 self.critical_messages.append('<Дата документа> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.date))
+                self.critical_colors[11] = True
         else:
             self.critical_messages.append('обязательное поле <Дата документа> не содержит значения')
+            self.critical_colors[11] = True
         # проверка данных паспорта
         if self.eskk_document_type_id == '21':
             if not re_full_match('\d{4}', self.picked_serial.value):
                 self.critical_messages.append('<Серия> для типа документа <Паспорт> не соответствует формату ={}'.format(self.picked_serial.value))
+                self.critical_colors[9] = True
             if not re_full_match('\d{6}', self.picked_number.value):
                 self.critical_messages.append('<Номер> для типа документа <Паспорт> не соответствует формату ={}'.format(self.picked_number.value))
+                self.critical_colors[10] = True
         # сбор всех ошибок
         self.warning_messages = (self.warning_messages + self.picked_serial.warning_messages + self.picked_number.warning_messages +
                                  self.picked_organization.warning_messages)
@@ -243,8 +300,26 @@ class LinkedDocumentVBDHandler(BaseHandler):
         self.picked_number = PickedDocumentNumberHandler(session, keywords['number'])
         self.picked_organization = PickedDocumentOrganizationHandler(session, keywords['organization'])
         self.date = clear_string(keywords['date'])
+        self.colors()
         self.get_model()
         self.check()
+
+    def colors(self):
+        self.warning_colors = {x: False for x in range(13, 17)}
+        if self.picked_serial.warning_messages:
+            self.warning_colors[13] = True
+        if self.picked_number.warning_messages:
+            self.warning_colors[14] = True
+        if self.picked_organization.warning_messages:
+            self.warning_colors[16] = True
+
+        self.critical_colors = {x: False for x in range(13, 17)}
+        if self.picked_serial.critical_messages:
+            self.critical_colors[13] = True
+        if self.picked_number.critical_messages:
+            self.critical_colors[14] = True
+        if self.picked_organization.critical_messages:
+            self.critical_colors[16] = True
 
     @property
     def document_date(self):
@@ -262,8 +337,10 @@ class LinkedDocumentVBDHandler(BaseHandler):
             # сверка организации и даты выдачи
             if model.picked_organization_id != self.picked_organization.id:
                 self.warning_messages.append('<УВБД> идентифицировалось ранее с выдавшим органом {}'.format(model.picked_organization.value))
+                self.warning_colors[16] = True
             if model.date != self.date:
                 self.warning_messages.append('<УВБД> идентифицировалось ранее с датой выдачи {}'.format(model.date))
+                self.warning_colors[15] = True
 
     def get_model(self):
         self._find_()
@@ -296,23 +373,29 @@ class LinkedDocumentVBDHandler(BaseHandler):
             if self.document_date:
                 if self.document_date > DTConvert().date:
                     self.critical_messages.append('<Дата УВБД> содержит значение старше текущей даты ={}'.format(self.date))
+                    self.critical_colors[15] = True
                 elif self.document_date < DTConvert('01.01.2004').date:  # должна быть строка
                     self.critical_messages.append('<Дата УВБД> содержит значение младше 01.01.2004 ={}'.format(self.date))
+                    self.critical_colors[15] = True
             else:
                 self.critical_messages.append('<Дата УВБД> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.date))
+                self.critical_colors[15] = True
         else:
             self.critical_messages.append('обязательное поле <Дата УВБД> не содержит значения')
+            self.critical_colors[15] = True
         # проверка серии
         # if not re_full_match('^[А-Я]{2}(\-I|){0,1}$', self.picked_serial.value):
         #     self.critical_messages.append('<Серия УВБД> не соответствует формату ={}'.format(self.picked_serial.value))
         # проверка номера
         if not re_full_match('\d{6,7}', self.picked_number.value):
             self.critical_messages.append('<Номер УВБД> не соответствует формату ={}'.format(self.picked_number.value))
+            self.critical_colors[14] = True
         # проверка номеров по серии
         rg_allow_serials = ['ВВ', 'БД', 'БД-I']
         if self.picked_serial.value in rg_allow_serials:
             if not re_full_match('\d{6}', self.picked_number.value):
                 self.critical_messages.append('<Номер УВБД> для серии {} не соответствует формату ={}'.format(self.picked_serial.value, self.picked_number.value))
+                self.critical_colors[14] = True
         # сбор всех ошибок
         self.warning_messages = (self.warning_messages + self.picked_serial.warning_messages +
                                  self.picked_number.warning_messages + self.picked_organization.warning_messages)
@@ -548,8 +631,88 @@ class LinkedDefenderHandler(BaseHandler):
         self.exclude_date = clear_string(keywords['exclude_date'])
         self.exclude_order = clear_string(keywords['exclude_order'])
         self.id_ern = clear_string(keywords['id_ern'])
+        self.colors()
         self.get_model()
         self.check()
+
+    def colors(self):
+        self.warning_colors = {x: False for x in range(1, 38)}
+        self.warning_colors.update(self.linked_person.warning_colors)
+        self.warning_colors.update(self.linked_document.warning_colors)
+        self.warning_colors.update(self.linked_document_vbd.warning_colors)
+
+        if self.linked_reg_address.picked_index.warning_messages:
+            self.warning_colors[17] = True
+        if self.linked_reg_address.picked_region.warning_messages:
+            self.warning_colors[18] = True
+        if self.linked_reg_address.picked_area.warning_messages:
+            self.warning_colors[19] = True
+        if self.linked_reg_address.picked_locality.warning_messages:
+            self.warning_colors[20] = True
+        if self.linked_reg_address.picked_street.warning_messages:
+            self.warning_colors[21] = True
+        if self.linked_reg_address.picked_house.warning_messages:
+            self.warning_colors[22] = True
+        if self.linked_reg_address.picked_building.warning_messages:
+            self.warning_colors[23] = True
+        if self.linked_reg_address.picked_flat.warning_messages:
+            self.warning_colors[24] = True
+
+        if self.linked_fact_address.picked_index.warning_messages:
+            self.warning_colors[25] = True
+        if self.linked_fact_address.picked_region.warning_messages:
+            self.warning_colors[26] = True
+        if self.linked_fact_address.picked_area.warning_messages:
+            self.warning_colors[27] = True
+        if self.linked_fact_address.picked_locality.warning_messages:
+            self.warning_colors[28] = True
+        if self.linked_fact_address.picked_street.warning_messages:
+            self.warning_colors[29] = True
+        if self.linked_fact_address.picked_house.warning_messages:
+            self.warning_colors[30] = True
+        if self.linked_fact_address.picked_building.warning_messages:
+            self.warning_colors[31] = True
+        if self.linked_fact_address.picked_flat.warning_messages:
+            self.warning_colors[32] = True
+
+        self.critical_colors = {x: False for x in range(1, 38)}
+        self.critical_colors.update(self.linked_person.critical_colors)
+        self.critical_colors.update(self.linked_document.critical_colors)
+        self.critical_colors.update(self.linked_document_vbd.critical_colors)
+
+        if self.linked_reg_address.picked_index.critical_messages:
+            self.critical_colors[17] = True
+        if self.linked_reg_address.picked_region.critical_messages:
+            self.critical_colors[18] = True
+        if self.linked_reg_address.picked_area.critical_messages:
+            self.critical_colors[19] = True
+        if self.linked_reg_address.picked_locality.critical_messages:
+            self.critical_colors[20] = True
+        if self.linked_reg_address.picked_street.critical_messages:
+            self.critical_colors[21] = True
+        if self.linked_reg_address.picked_house.critical_messages:
+            self.critical_colors[22] = True
+        if self.linked_reg_address.picked_building.critical_messages:
+            self.critical_colors[23] = True
+        if self.linked_reg_address.picked_flat.critical_messages:
+            self.critical_colors[24] = True
+
+        if self.linked_fact_address.picked_index.critical_messages:
+            self.critical_colors[25] = True
+        if self.linked_fact_address.picked_region.critical_messages:
+            self.critical_colors[26] = True
+        if self.linked_fact_address.picked_area.critical_messages:
+            self.critical_colors[27] = True
+        if self.linked_fact_address.picked_locality.critical_messages:
+            self.critical_colors[28] = True
+        if self.linked_fact_address.picked_street.critical_messages:
+            self.critical_colors[29] = True
+        if self.linked_fact_address.picked_house.critical_messages:
+            self.critical_colors[30] = True
+        if self.linked_fact_address.picked_building.critical_messages:
+            self.critical_colors[31] = True
+        if self.linked_fact_address.picked_flat.critical_messages:
+            self.critical_colors[32] = True
 
     @property
     def exclude_real_date(self):
@@ -634,6 +797,7 @@ class LinkedDefenderHandler(BaseHandler):
         # проверка на идентификацию защитника с такими же данными
         if self.is_already_exists:
             self.warning_messages.append('<Защитник> уже идентифицировался {}'.format(self.created_utc))
+            # self.warning_colors = {x: True for x in range(1, 38)}
         # проверка принадлежности существующего документа этой же персоне
         if self.linked_document.is_already_exists and self.linked_document.picked_serial.value and self.linked_document.picked_number.value:
             models = self._session_.query(LinkedDefender).filter(LinkedDefender.linked_document_id == self.linked_document.id).all()
@@ -646,6 +810,11 @@ class LinkedDefenderHandler(BaseHandler):
                         model.linked_person.picked_first_name.value,
                         model.linked_person.picked_middle_name.value
                     ))
+                    self.warning_colors[8] = True
+                    self.warning_colors[9] = True
+                    self.warning_colors[10] = True
+                    self.warning_colors[11] = True
+                    self.warning_colors[12] = True
         # проверка принадлежности существующего УВБД этой же персоне
         if self.linked_document_vbd.is_already_exists and self.linked_document_vbd.picked_serial.value and self.linked_document_vbd.picked_number.value:
             models = self._session_.query(LinkedDefender).filter(LinkedDefender.linked_document_vbd_id == self.linked_document_vbd.id).all()
@@ -658,6 +827,10 @@ class LinkedDefenderHandler(BaseHandler):
                         model.linked_person.picked_first_name.value,
                         model.linked_person.picked_middle_name.value
                     ))
+                    self.warning_colors[13] = True
+                    self.warning_colors[14] = True
+                    self.warning_colors[15] = True
+                    self.warning_colors[16] = True
         # проверка принадлежности существующего личного номера этой же персоне
         if self.picked_personal_number.is_already_exists and self.picked_personal_number.value:
             models = self._session_.query(LinkedDefender).filter(LinkedDefender.picked_personal_number_id == self.picked_personal_number.id).all()
@@ -669,42 +842,54 @@ class LinkedDefenderHandler(BaseHandler):
                         model.linked_person.picked_first_name.value,
                         model.linked_person.picked_middle_name.value
                     ))
+                    self.warning_colors[37] = True
         # проверка даты исключения
         if self.exclude_date:
             if self.exclude_real_date:
                 if self.exclude_real_date > DTConvert().date:
                     self.critical_messages.append('<Дата исключения> старше текущей даты ={}'.format(self.exclude_date))
+                    self.critical_colors[35] = True
             else:
                 self.critical_messages.append('<Дата исключения> не соответствует формату ДД.ММ.ГГГГ ={}'.format(self.exclude_date))
+                self.critical_colors[35] = True
         else:
             self.critical_messages.append('обязательное поле <Дата исключения> не содержит значения')
+            self.critical_colors[35] = True
         # проверка реквизитов приказа об исключении
         if self.exclude_order:
             if len(self.exclude_order) < 13:
                 self.warning_messages.append('<Реквизиты приказа> содержат излишне короткое значение')
+                self.warning_colors[36] = True
         else:
             self.critical_messages.append('обязательное поле <Реквизиты приказа> не содержит значения')
+            self.critical_colors[36] = True
         # проверка места рождения
         if self.birth_place:
             if not re_full_match('[А-Яа-я0-9-,.()\/ ]+', self.birth_place):
                 self.critical_messages.append('<Место рождения> не соответствует формату ={}'.format(self.birth_place))
+                self.critical_colors[6] = True
             if len(self.birth_place) < 5 or len(self.birth_place) > 200:
                 self.critical_messages.append('<Место рождения> недопустимая длина значения {}={} (должно быть 5-200)'.format(
                     self.birth_place, len(self.birth_place)
                 ))
+                self.critical_colors[6] = True
         # проверка идентификатора единого реестра населения
         if self.id_ern:
             if not re_full_match('\d{12}', self.id_ern):
                 self.critical_messages.append('<ID ЕРН> не соответствует формату ={}'.format(self.id_ern))
+                self.critical_colors[33] = True
         # проверка действительности паспорта
         if self.linked_document.eskk_document_type_id == '21':
             if self.linked_document.document_date and self.linked_person.age(20) and self.linked_document.document_date < self.linked_person.age(20) < DTConvert().date:
                 self.warning_messages.append('<Паспорт> требует замены по достижению возраста 20 лет')
+                self.warning_colors[11] = True
             if self.linked_document.document_date and self.linked_person.age(45) and self.linked_document.document_date < self.linked_person.age(45) < DTConvert().date:
                 self.warning_messages.append('<Паспорт> требует замены по достижению возраста 45 лет')
+                self.warning_colors[11] = True
         # проверка даты выдачи УВБД
         if self.linked_person.age(18) and self.linked_document_vbd.document_date and self.linked_person.age(18) > self.linked_document_vbd.document_date:
             self.critical_messages.append('<УВБД> получено до достижения возраста 18 лет')
+            self.critical_colors[15] = True
         # сбор всех ошибок
         self.warning_messages = (self.warning_messages + self.linked_person.warning_messages +
                                  self.linked_document.warning_messages + self.linked_document_vbd.warning_messages +
