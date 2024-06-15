@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowiDbjTX.ui'
+## Form generated from reading UI file 'main_windowpjpHQo.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -55,6 +55,8 @@ class Ui_MainWindow(object):
         self.action_storage_stat.setObjectName(u"action_storage_stat")
         self.action_storage = QAction(MainWindow)
         self.action_storage.setObjectName(u"action_storage")
+        self.action_sfr_control = QAction(MainWindow)
+        self.action_sfr_control.setObjectName(u"action_sfr_control")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -431,6 +433,7 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menu_main.menuAction())
         self.menubar.addAction(self.menu_storage.menuAction())
+        self.menu_main.addAction(self.action_sfr_control)
         self.menu_main.addAction(self.action_exit)
         self.menu_storage.addAction(self.menu_catalogs.menuAction())
         self.menu_storage.addAction(self.menu_eskk.menuAction())
@@ -476,6 +479,7 @@ class Ui_MainWindow(object):
         self.action_vacuum_db.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0436\u0430\u0442\u044c \u0431\u0430\u0437\u0443 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.action_storage_stat.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
         self.action_storage.setText(QCoreApplication.translate("MainWindow", u"\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
+        self.action_sfr_control.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0432\u0435\u0440\u043a\u0430 \u0441 \u0421\u0424\u0420", None))
         self.pushButton_refresh_statistic.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_save_statistic.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_statistic), QCoreApplication.translate("MainWindow", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))

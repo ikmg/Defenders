@@ -154,3 +154,12 @@ def create_result_file(session, import_id, destination):
 
     # сохранить
     workbook.save(destination.path)
+
+
+def create_sfr_control_file(header, rows, destination):
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.append(header)
+    for row in rows:
+        worksheet.append(row)
+    workbook.save(destination)

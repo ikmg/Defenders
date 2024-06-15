@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox
 
-from backend import StorageInspector
+from backend import StorageInspector, get_sfr_control_rows, create_sfr_control_file
 
 
 class Menu:
@@ -12,6 +12,10 @@ class Menu:
         self.main = main
         #
         self.main.action_exit.triggered.connect(self.main.close)
+
+        self.main.action_sfr_control.setIcon(QIcon(self.main.app.storage.images.exports.path))
+        self.main.action_sfr_control.triggered.connect(self.sfr_control)
+
         #
         self.main.menu_catalogs.setIcon(QIcon(self.main.app.storage.images.folder_open.path))
 
@@ -55,6 +59,27 @@ class Menu:
 
         self.main.action_vacuum_db.setIcon(QIcon(self.main.app.storage.images.result.path))
         self.main.action_vacuum_db.triggered.connect(self.vacuum_db)
+
+    def sfr_control(self):
+        header = [
+            '№',
+            'Фамилия',
+            'Имя',
+            'Отчество',
+            'Пол',
+            'Дата рождения',
+            'СНИЛС',
+            'Тип',
+            'Серия',
+            'Номер',
+            'Выдан',
+            'Отправка',
+            'Ответ СФР'
+        ]
+        rows = get_sfr_control_rows(self.main.app.database.session)
+        destination = self.main.app.storage.stat.add_file('sfr_control.xlsx')
+        create_sfr_control_file(header, rows, destination.path)
+        destination.start()
 
     def clear_storage(self):
         with open('storage_inspector.txt', 'w') as sys.stdout:

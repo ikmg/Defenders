@@ -455,6 +455,7 @@
     <property name="title">
      <string>Меню</string>
     </property>
+    <addaction name="action_sfr_control"/>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_storage">
@@ -570,6 +571,11 @@
   <action name="action_storage">
    <property name="text">
     <string>Хранилище</string>
+   </property>
+  </action>
+  <action name="action_sfr_control">
+   <property name="text">
+    <string>Сверка с СФР</string>
    </property>
   </action>
  </widget>
