@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowpjpHQo.ui'
+## Form generated from reading UI file 'main_windowMgblXW.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -49,14 +49,14 @@ class Ui_MainWindow(object):
         self.action_eskk_subjects.setObjectName(u"action_eskk_subjects")
         self.action_eskk_all = QAction(MainWindow)
         self.action_eskk_all.setObjectName(u"action_eskk_all")
-        self.action_vacuum_db = QAction(MainWindow)
-        self.action_vacuum_db.setObjectName(u"action_vacuum_db")
         self.action_storage_stat = QAction(MainWindow)
         self.action_storage_stat.setObjectName(u"action_storage_stat")
         self.action_storage = QAction(MainWindow)
         self.action_storage.setObjectName(u"action_storage")
         self.action_sfr_control = QAction(MainWindow)
         self.action_sfr_control.setObjectName(u"action_sfr_control")
+        self.action_vacuum_db = QAction(MainWindow)
+        self.action_vacuum_db.setObjectName(u"action_vacuum_db")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -427,18 +427,18 @@ class Ui_MainWindow(object):
         self.menu_storage.setObjectName(u"menu_storage")
         self.menu_catalogs = QMenu(self.menu_storage)
         self.menu_catalogs.setObjectName(u"menu_catalogs")
-        self.menu_eskk = QMenu(self.menu_storage)
+        self.menu_db = QMenu(self.menubar)
+        self.menu_db.setObjectName(u"menu_db")
+        self.menu_eskk = QMenu(self.menu_db)
         self.menu_eskk.setObjectName(u"menu_eskk")
         MainWindow.setMenuBar(self.menubar)
 
         self.menubar.addAction(self.menu_main.menuAction())
+        self.menubar.addAction(self.menu_db.menuAction())
         self.menubar.addAction(self.menu_storage.menuAction())
-        self.menu_main.addAction(self.action_sfr_control)
         self.menu_main.addAction(self.action_exit)
         self.menu_storage.addAction(self.menu_catalogs.menuAction())
-        self.menu_storage.addAction(self.menu_eskk.menuAction())
         self.menu_storage.addAction(self.action_clear_storage)
-        self.menu_storage.addAction(self.action_vacuum_db)
         self.menu_catalogs.addAction(self.action_storage_imports)
         self.menu_catalogs.addAction(self.action_storage_exports)
         self.menu_catalogs.addAction(self.action_storage_answers)
@@ -446,6 +446,9 @@ class Ui_MainWindow(object):
         self.menu_catalogs.addAction(self.action_storage_stat)
         self.menu_catalogs.addSeparator()
         self.menu_catalogs.addAction(self.action_storage)
+        self.menu_db.addAction(self.menu_eskk.menuAction())
+        self.menu_db.addAction(self.action_vacuum_db)
+        self.menu_db.addAction(self.action_sfr_control)
         self.menu_eskk.addAction(self.action_eskk_genders)
         self.menu_eskk.addAction(self.action_eskk_doc_types)
         self.menu_eskk.addAction(self.action_eskk_ranks)
@@ -476,10 +479,10 @@ class Ui_MainWindow(object):
         self.action_eskk_ranks.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0432\u0430\u043d\u0438\u044f", None))
         self.action_eskk_subjects.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0443\u0431\u044a\u0435\u043a\u0442\u044b", None))
         self.action_eskk_all.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0435", None))
-        self.action_vacuum_db.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0436\u0430\u0442\u044c \u0431\u0430\u0437\u0443 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.action_storage_stat.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
         self.action_storage.setText(QCoreApplication.translate("MainWindow", u"\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
         self.action_sfr_control.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0432\u0435\u0440\u043a\u0430 \u0441 \u0421\u0424\u0420", None))
+        self.action_vacuum_db.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0436\u0430\u0442\u044c \u0431\u0430\u0437\u0443 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.pushButton_refresh_statistic.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_save_statistic.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_statistic), QCoreApplication.translate("MainWindow", u"\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430", None))
@@ -509,6 +512,7 @@ class Ui_MainWindow(object):
         self.menu_main.setTitle(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u043d\u044e", None))
         self.menu_storage.setTitle(QCoreApplication.translate("MainWindow", u"\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435", None))
         self.menu_catalogs.setTitle(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0442\u0430\u043b\u043e\u0433...", None))
+        self.menu_db.setTitle(QCoreApplication.translate("MainWindow", u"\u0411\u0430\u0437\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.menu_eskk.setTitle(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043f\u0440\u0430\u0432\u043e\u0447\u043d\u0438\u043a\u0438...", None))
     # retranslateUi
 

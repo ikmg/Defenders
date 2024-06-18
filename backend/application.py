@@ -13,7 +13,7 @@ from tools import Directory, File, work_directory, DTConvert
 # В - ВИНТОВКА
 # Г - ГАРДА
 APP_VERSION = 'БЕРДАНКА'
-APP_RELEASE = '09.06.2024'
+APP_RELEASE = '18.06.2024'
 
 
 class Root:

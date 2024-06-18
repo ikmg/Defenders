@@ -29,6 +29,16 @@ class LinkedPerson(BaseModel):
     picked_first_name = relationship('PickedFirstName', uselist=False, lazy=True)
     picked_middle_name = relationship('PickedMiddleName', uselist=False, lazy=True)
 
+    linked_defenders = relationship('LinkedDefender', uselist=True, lazy=True)
+
+    def __repr__(self):
+        return '{} ({}), {} - {}'.format(
+            self.person_appeal,
+            self.birthday,
+            self.eskk_gender.name,
+            self.picked_snils.value
+        )
+
     @hybrid_property
     def person_appeal(self):
         return '{} {} {}'.format(
@@ -155,7 +165,7 @@ class LinkedDefender(BaseModel):
     exclude_order = Column(String, primary_key=True, nullable=False)
     id_ern = Column(String, primary_key=True, nullable=False)
 
-    linked_person = relationship('LinkedPerson', uselist=False, lazy=True)
+    linked_person = relationship('LinkedPerson', uselist=False, lazy=True, back_populates='linked_defenders')
     linked_document = relationship('LinkedDocument', uselist=False, lazy=True)
     linked_document_vbd = relationship('LinkedDocumentVBD', uselist=False, lazy=True)
     linked_reg_address = relationship('LinkedAddress', foreign_keys=[linked_reg_address_id], uselist=False, lazy=True)

@@ -73,7 +73,8 @@ class Menu:
             'Серия',
             'Номер',
             'Выдан',
-            'Отправка',
+            'Дата выгрузки',
+            'Номер выгрузки',
             'Ответ СФР'
         ]
         rows = get_sfr_control_rows(self.main.app.database.session)

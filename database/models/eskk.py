@@ -18,7 +18,7 @@ class EskkModel(BaseModel):
 
     def __repr__(self):
         return 'value <{}>, id <{}>'.format(
-            self.value,
+            self.name,
             self.id
         )
 

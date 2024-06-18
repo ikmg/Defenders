@@ -455,7 +455,6 @@
     <property name="title">
      <string>Меню</string>
     </property>
-    <addaction name="action_sfr_control"/>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_storage">
@@ -474,6 +473,13 @@
      <addaction name="separator"/>
      <addaction name="action_storage"/>
     </widget>
+    <addaction name="menu_catalogs"/>
+    <addaction name="action_clear_storage"/>
+   </widget>
+   <widget class="QMenu" name="menu_db">
+    <property name="title">
+     <string>База данных</string>
+    </property>
     <widget class="QMenu" name="menu_eskk">
      <property name="title">
       <string>Обновить справочники...</string>
@@ -485,12 +491,12 @@
      <addaction name="separator"/>
      <addaction name="action_eskk_all"/>
     </widget>
-    <addaction name="menu_catalogs"/>
     <addaction name="menu_eskk"/>
-    <addaction name="action_clear_storage"/>
     <addaction name="action_vacuum_db"/>
+    <addaction name="action_sfr_control"/>
    </widget>
    <addaction name="menu_main"/>
+   <addaction name="menu_db"/>
    <addaction name="menu_storage"/>
   </widget>
   <action name="action_load_orders">
@@ -558,11 +564,6 @@
     <string>Все</string>
    </property>
   </action>
-  <action name="action_vacuum_db">
-   <property name="text">
-    <string>Сжать базу данных</string>
-   </property>
-  </action>
   <action name="action_storage_stat">
    <property name="text">
     <string>Статистика</string>
@@ -576,6 +577,11 @@
   <action name="action_sfr_control">
    <property name="text">
     <string>Сверка с СФР</string>
+   </property>
+  </action>
+  <action name="action_vacuum_db">
+   <property name="text">
+    <string>Сжать базу данных</string>
    </property>
   </action>
  </widget>

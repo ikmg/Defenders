@@ -87,6 +87,12 @@ class KeepedReportRecord(KeeperRecordModel):
     linked_defender = relationship('LinkedDefender', uselist=False, lazy=True)
     provided_report_record = relationship('ProvidedReportRecord', uselist=False, lazy=True, back_populates='keeped_report_record')
 
+    def __repr__(self):
+        return '<{}> row {}'.format(
+            self.keeped_report_id,
+            self.keep_row_num
+        )
+
 
 # class KeepedAnswerRecords(KeeperRecordModel):
 #     """Хранитель информации о протоколах идентификации СФР России"""
