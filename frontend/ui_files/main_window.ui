@@ -494,6 +494,7 @@
     <addaction name="menu_eskk"/>
     <addaction name="action_vacuum_db"/>
     <addaction name="action_sfr_control"/>
+    <addaction name="action_forgiven_defenders"/>
    </widget>
    <addaction name="menu_main"/>
    <addaction name="menu_db"/>
@@ -582,6 +583,11 @@
   <action name="action_vacuum_db">
    <property name="text">
     <string>Сжать базу данных</string>
+   </property>
+  </action>
+  <action name="action_forgiven_defenders">
+   <property name="text">
+    <string>Забытые защитники</string>
    </property>
   </action>
  </widget>

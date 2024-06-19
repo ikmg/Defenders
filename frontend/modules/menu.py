@@ -4,6 +4,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox
 
 from backend import StorageInspector, get_sfr_control_rows, create_sfr_control_file
+from backend.download.data.sfr_control import get_sfr_forgiven_rows
+from backend.download.workbooks import create_sfr_forgiven_file
 
 
 class Menu:
@@ -15,6 +17,9 @@ class Menu:
 
         self.main.action_sfr_control.setIcon(QIcon(self.main.app.storage.images.exports.path))
         self.main.action_sfr_control.triggered.connect(self.sfr_control)
+
+        self.main.action_forgiven_defenders.setIcon(QIcon(self.main.app.storage.images.search.path))
+        self.main.action_forgiven_defenders.triggered.connect(self.sfr_forgiven)
 
         #
         self.main.menu_catalogs.setIcon(QIcon(self.main.app.storage.images.folder_open.path))
@@ -80,6 +85,28 @@ class Menu:
         rows = get_sfr_control_rows(self.main.app.database.session)
         destination = self.main.app.storage.stat.add_file('sfr_control.xlsx')
         create_sfr_control_file(header, rows, destination.path)
+        destination.start()
+
+    def sfr_forgiven(self):
+        header = [
+            '№',
+            'Фамилия',
+            'Имя',
+            'Отчество',
+            'Пол',
+            'Дата рождения',
+            'СНИЛС',
+            'Тип',
+            'Серия',
+            'Номер',
+            'Выдан',
+            'Дата выгрузки',
+            'Номер выгрузки, строка',
+            'Ответ СФР'
+        ]
+        rows = get_sfr_forgiven_rows(self.main.app.database.session)
+        destination = self.main.app.storage.stat.add_file('sfr_forgiven.xlsx')
+        create_sfr_forgiven_file(header, rows, destination.path)
         destination.start()
 
     def clear_storage(self):

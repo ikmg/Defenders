@@ -163,3 +163,12 @@ def create_sfr_control_file(header, rows, destination):
     for row in rows:
         worksheet.append(row)
     workbook.save(destination)
+
+
+def create_sfr_forgiven_file(header, rows, destination):
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.append(header)
+    for row in rows:
+        worksheet.append(row)
+    workbook.save(destination)
