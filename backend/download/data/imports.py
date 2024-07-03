@@ -227,8 +227,8 @@ def result_file_data(session, import_id):
             row.append('Ответ СФР: {}'.format(record.provided_report_record.answer_init.comment))
         data.append({
             'data': row,
-            'warnings': json.loads(record.warning_colors),
-            'critical': json.loads(record.critical_colors)
+            'warnings': json.loads(record.warning_colors) if record.warning_colors else {},
+            'critical': json.loads(record.critical_colors) if record.critical_colors else {}
         })
     data.append({
         'data': [],
