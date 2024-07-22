@@ -32,8 +32,9 @@ class FolderInspector:
         for file_path in self.fs_paths:
             if file_path not in db_files:
                 result = False
-                self.outer_files.append(File(file_path))
-                print('\t\tФайл не учтен в базе данных <{}>'.format(file_path))
+                file = File(file_path)
+                self.outer_files.append(file)
+                print('\t\tФайл <{}> объемом {} Мб не учтен в базе данных и будет удален'.format(file_path, round(file.size_mb, 2)))
         return result
 
     def compare(self):
@@ -66,4 +67,17 @@ class StorageInspector:
         self.orders.compare()
 
     def clear(self):
-        print('ОЧИСТКА НЕ ПРОИЗВОДИТСЯ. СКИНУТЬ ЛОГ')
+        total_mb = 0
+        files_count = len(self.exports.outer_files) + len(self.imports.outer_files) + len(self.imports.outer_files)
+        for file in self.exports.outer_files:
+            total_mb += file.size_mb
+            file.delete()
+        for file in self.imports.outer_files:
+            total_mb += file.size_mb
+            file.delete()
+        for file in self.orders.outer_files:
+            total_mb += file.size_mb
+            file.delete()
+        result = 'Удалено <{}> файлов {} Мб'.format(files_count, round(total_mb, 2))
+        print(result)
+        return result

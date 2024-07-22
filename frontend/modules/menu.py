@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 from backend import StorageInspector, get_sfr_control_rows, create_sfr_control_file
 from backend.download.data.sfr_control import get_sfr_forgiven_rows
 from backend.download.workbooks import create_sfr_forgiven_file
+from tools import File
 
 
 class Menu:
@@ -110,12 +111,15 @@ class Menu:
         destination.start()
 
     def clear_storage(self):
-        with open('storage_inspector.txt', 'w') as sys.stdout:
+        file_name = 'storage_inspector.txt'
+        with open(file_name, 'w') as sys.stdout:
             inspector = StorageInspector(self.main.app)
             inspector.compare()
-            inspector.clear()
+            res = inspector.clear()
         sys.stdout = sys.__stdout__
-        QMessageBox.information(self.main, 'Новая функция', 'находится в разработке')
+        QMessageBox.information(self.main, 'Зачистка хранилища', res)
+        file = File(file_name)
+        file.start()
 
     def vacuum_db(self):
         self.main.app.database.vacuum()
